@@ -15,29 +15,37 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        //MARICES FLOTANTES
+        //MARICES FLOTANTES//
         /*Matriz.matriz = Matriz.leerArchivo();
         Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println();
-        SimplexMax sm = new SimplexMax(3, 2, Matriz.matriz);
+        SimplexMax sm = new SimplexMax(2, 3, Matriz.matriz);
         Matriz.imprimirMatriz(sm.matriz);
         System.out.println();
         Fraccion[][] nueva = Fraccion.convertirMatriz(sm.matriz);
         Matriz.imprimirMatriz(nueva);
         System.out.println();*/
         
-        //Matriz de decial a fracciones
-         Matriz.matriz = Matriz.leerArchivo();
+        //Matriz de decial a fracciones//
+        /*Matriz.matriz = Matriz.leerArchivo();
         Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println();
         Fraccion[][] nueva = Fraccion.convertirMatriz(Matriz.matriz);
         Matriz.imprimirMatriz(nueva);
+        System.out.println();*/
+        
+        //Lee matrzi flotantes, cambia a fraccion y aplica simplex//
+        Matriz.matriz = Matriz.leerArchivo();
+        Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println();
+        Matriz.matrizF = Fraccion.convertirMatriz(Matriz.matriz);
+        Matriz.imprimirMatriz(Matriz.matrizF);
+        SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
+        System.out.println();
+        Matriz.imprimirMatriz(sm1.matrizF);
         
         
         
-       //Matriz.matrizFraccion = Matriz.leerArchivoFraccion();
-       //Matriz.imprimirMatriz(Matriz.matrizFraccion);
     }
     
 }

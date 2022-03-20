@@ -59,14 +59,14 @@ public class Fraccion {
         }
     }
 
-    private Fraccion suma(Fraccion f1){
+    public Fraccion suma(Fraccion f1){
         Fraccion aux = new Fraccion();
         aux.setNumerador(this.numerador * f1.getDenominador() + this.denominador * f1.getNumerador()); 
         aux.denominador = this.denominador * f1.getDenominador();
         aux.simplificar();  //se simplifica antes de devolverla                                                   
         return aux;
     }
-    private Fraccion multiplicar(Fraccion f1){
+    public Fraccion multiplicar(Fraccion f1){
         Fraccion aux = new Fraccion();
         aux.setNumerador(this.numerador * f1.getNumerador());
         aux.setDenominador(this.denominador * f1.getDenominador());
@@ -76,9 +76,17 @@ public class Fraccion {
     public Fraccion dividir(Fraccion f) {
         Fraccion aux = new Fraccion();
         aux.setNumerador(this.numerador * f.getDenominador());
-        aux.setDenominador(this.numerador * f.getNumerador());
+        aux.setDenominador(this.denominador * f.getNumerador());
         aux.simplificar();  //se simplifica antes de devolverla
         return aux;
+    }
+    public Fraccion dividirNegativo(Fraccion f) {
+       Fraccion aux = new Fraccion();
+        aux.setNumerador(this.numerador * f.getDenominador());
+        aux.setDenominador(this.denominador * f.getNumerador());
+        aux.simplificar();  //se simplifica antes de devolverla
+        aux.setNumerador(aux.getNumerador()*(-1));
+        return aux; 
     }
     public static Fraccion convertir(float numero){ //pasa un decimal a fraccion
         //2.5 -> (2.5*10)/10  -> 5/2
@@ -111,6 +119,9 @@ public class Fraccion {
             }
         }
         return aux;
+    }
+    boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
+        return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
     }
     
     @Override

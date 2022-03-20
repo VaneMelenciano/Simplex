@@ -26,7 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class Matriz {
     public static float[][] matriz;
-    public static Fraccion[][] matrizFraccion;
+    public static Fraccion[][] matrizF;
     public static int restricciones;
     public static int variables;
     
