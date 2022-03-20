@@ -10,6 +10,7 @@ package simplexmax;
  * @author Vanessa
  */
 public class Fraccion {
+    //si la fraccion es negativa, el numerador tiene el signo
     private int numerador;
     private int denominador;
     public Fraccion(int num, int den){
@@ -79,11 +80,44 @@ public class Fraccion {
         aux.simplificar();  //se simplifica antes de devolverla
         return aux;
     }
+    public static Fraccion convertir(float numero){ //pasa un decimal a fraccion
+        //2.5 -> (2.5*10)/10  -> 5/2
+        //0.1 -> 1/10
+        String str = String.valueOf(numero);
+        //int intNumero = Integer.parseInt(str.substring(0, str.indexOf('.'))); //parte entera del numero
+        //int decInt = Integer.parseInt(str.substring(str.indexOf('.') + 1)); //parte decimal del numero
+        String decimal = str.substring(str.indexOf('.') + 1); //parte decimal del numero
+        int t = decimal.length()-1;
+        String aux = "1";
+        while(t>=0){
+            aux+="0";
+            t--;
+        }
+        Fraccion auxF = new Fraccion();
+        auxF.setNumerador((int) (numero*Integer.parseInt(aux)));
+        auxF.setDenominador(Integer.parseInt(aux));
+        auxF.simplificar();
+        return auxF;
+    }
+    public static float convertirFD(Fraccion f){ //pasa un fraccion a decimal
+        float aux = f.numerador / f.denominador;
+        return aux;
+    }
+    static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
+        Fraccion[][] aux = new Fraccion[matriz.length][matriz[0].length];
+        for(int i=0; i<matriz.length; i++){
+            for(int j=0; j<matriz[0].length; j++){
+                aux[i][j] = convertir(matriz[i][j]);
+            }
+        }
+        return aux;
+    }
+    
     @Override
     public String toString(){
       if(getDenominador()!=0){
         simplificar();
-        return getNumerador()+"/"+getDenominador(); 
+        return (getNumerador()+"/"+getDenominador()); 
       }else {
 
          return "El denominador debe ser distinto de 0";

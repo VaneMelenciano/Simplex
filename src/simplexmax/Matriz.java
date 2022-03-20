@@ -26,6 +26,7 @@ import javax.swing.JOptionPane;
  */
 public class Matriz {
     public static float[][] matriz;
+    public static Fraccion[][] matrizFraccion;
     public static int restricciones;
     public static int variables;
     
@@ -92,10 +93,100 @@ public class Matriz {
         return matriz;
     }
     
+    public static Fraccion[][] leerArchivoFraccion(){
+        String aux, texto;
+        Fraccion matriz[][] = null;
+        LinkedList<String> lista = new LinkedList(); //para guardar los datos que se vayan leyendo
+        
+        
+        try {
+            JFileChooser file = new JFileChooser(); //llamamos el metodo que permite cargar la ventana
+            file.setCurrentDirectory(new File("./Pruebas"));
+            file.showOpenDialog(file);
+            //Abre el archivo
+            File abre = file.getSelectedFile();
+
+            //recorremos el archivo y lo leemos
+            if (abre != null) { //verifica que esté abierto
+                
+                FileReader archivos = new FileReader(abre);
+                BufferedReader lee = new BufferedReader(archivos);
+
+                while ((aux = lee.readLine()) != null) {
+                    texto = aux; //guarda la linea del archivo leido en el String
+                    lista.add(texto); //añade el String anterior a la lista
+                }
+                lee.close();
+                
+                
+                //TOKENIZAR DATOS
+                ArrayList<String> lista2 = new ArrayList<>(); //un renglon
+                int columnas =0;
+                String aux1 = lista.get(0);
+                for (char c: aux1.toCharArray ()) { 
+                    if(c == ' '){
+                        columnas++;
+                    } 
+                }
+                columnas++;
+                matriz = new Fraccion[lista.size()][columnas];
+                
+                for (int i = 0; i < lista.size(); i++) { 
+
+                    StringTokenizer tokens = new StringTokenizer(lista.get(i), " "); //va separando los renglones guardado en la lista, por los espacios
+
+                    while (tokens.hasMoreTokens()) { //mientras existan tokens (renglones)
+                        lista2.add(tokens.nextToken()); //guarda cada dato del renglo en la lista2
+                    }
+                    
+                    /*for (int x = 0; x < columnas; x++) { //s manda directamente como fraccion
+                        Fraccion auxF = new Fraccion();
+                        int num = Character.getNumericValue(lista2.get(x).charAt(0)); 
+                        auxF.setNumerador(num);
+                        if(lista.get(x).length()>1){
+                            int den = Character.getNumericValue(lista2.get(x).charAt(2));
+                            auxF.setDenominador(den);
+                        }else{
+                            auxF.setDenominador(1);
+                        }
+                        //matriz[i][x] = Float.valueOf(lista2.get(x));
+                    }*/
+                    for (int x = 0; x < columnas; x++) { 
+                        matriz[i][x] = Fraccion.convertir(Float.valueOf(lista2.get(x)));
+                    }
+                    
+                    lista2.clear();
+                }
+                
+          
+            }
+            
+        }catch (IOException ex) {
+            JOptionPane.showMessageDialog(null, ex + ""
+                    + "\nArchivo no encontrado",
+                    "ADVERTENCIA!!!", JOptionPane.WARNING_MESSAGE);
+            
+        }
+        return matriz;
+    }
+    
     public static void imprimirMatriz(float[][] matriz){
        for(int i=0; i<matriz.length; i++){
             for(float j : matriz[i]){
                System.out.print(j + "\t"); 
+            }
+            System.out.println();
+        } 
+    }
+    public static void imprimirMatriz(Fraccion[][] matriz){
+       for(int i=0; i<matriz.length; i++){
+            for(Fraccion j : matriz[i]){
+               //j.toString();
+               if(j.getDenominador()!=1 && j.getNumerador()!=0)
+                System.out.print(j.getNumerador()+"/"+j.getDenominador());
+               else //numero enteros
+                 System.out.print(j.getNumerador()); 
+               System.out.print(" ");
             }
             System.out.println();
         } 

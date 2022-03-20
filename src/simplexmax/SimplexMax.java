@@ -13,10 +13,11 @@ public class SimplexMax {
     int restricciones;
     int variables;
     public float[][] matriz;
+    public Fraccion[][] matrizF;
     int filaP;
     int columnaP;
     float pivote;
-    
+    //Todas las funciones que tengan una F al final, son las que trabajan con la matriz de funciones
     public SimplexMax(int restricciones, int variables, float[][] matriz){
         this.restricciones=restricciones;
         this.variables=variables;
@@ -24,11 +25,17 @@ public class SimplexMax {
         
         proceso();
     }
+    public SimplexMax(int restricciones, int variables, Fraccion[][] matriz){
+        this.restricciones=restricciones;
+        this.variables=variables;
+        this.matrizF = matriz;
+        
+        procesoF();
+    }
     private void proceso(){
         //funcion principal para hacer le proceso del simplex max
-        
         System.out.println("Primer proceso");
-        buscarPivote();
+        buscarPivoteF();
         filaPivote();
         columnaPivote();
         while(!verificarNegativos()){ //miestras sigan existiendo números negativos en la última fila
@@ -39,6 +46,17 @@ public class SimplexMax {
             columnaPivote(); 
         } 
     }
+    private void procesoF(){
+        //funcion principal para hacer le proceso del simplex max
+        while(!verificarNegativosF()){ //miestras sigan existiendo números negativos en la última fila
+            //Matriz.imprimirMatriz(matriz);
+            System.out.println("Siguiente proceso");
+           buscarPivote();
+            filaPivote();
+            columnaPivote(); 
+        } 
+    }
+    
     private void buscarPivote(){ //buca la posición del elemento Pivote (fila y columna)
         System.out.println("buscar pivote");
         int filas = this.matriz.length;
@@ -51,6 +69,46 @@ public class SimplexMax {
         for(int j=1; j<this.variables; j++){ //recorre el valor de las variables en la última fila
             System.out.println(this.matriz[ultima][j]);
             if(Math.abs(this.matriz[ultima][j])>mayor){
+                System.out.println("Entro");
+                mayor = this.matriz[ultima][j];
+                columnaP = j;
+            }
+        }
+        System.out.println("ColumnaP: " + this.columnaP);
+        //Razón de desplazamiento
+        int columnas = this.matriz[0].length;
+        System.out.println(columnas);
+        this.filaP = 0; //fila pivote
+        float menor = (float)this.matriz[0][columnas-1] / this.matriz[0][columnaP]; //buscar la razón de desplazamineto (menor)
+        System.out.println(this.matriz[0][columnas-1] + "/" + this.matriz[0][columnaP] + " = " + menor);
+        for(int i=1; i<filas-1; i++){//columna de constantes
+            float aux = this.matriz[i][columnas-1] / this.matriz[i][columnaP];
+            System.out.println(this.matriz[i][columnas-1] + "/" + this.matriz[i][columnaP] + " = " + aux);
+            if(aux<menor){
+                System.out.println("entro");
+                menor = aux;
+                filaP = i;
+            }
+        }
+        System.out.println("FilaP: " + this.filaP);
+        actualizarPivote();
+        System.out.println("Pivote: " + this.pivote);
+        //elemento pivote está en la posición [filaP][columaP]
+    }
+    
+    private void buscarPivoteF(){ //buca la posición del elemento Pivote (fila y columna)
+        System.out.println("buscar pivote");
+        int filas = this.matrizF.length;
+        System.out.println(filas);
+        int ultima= filas -1; //última fila, donde esta la función objetivo
+        System.out.println(ultima);
+        double mayor = Math.abs(Fraccion.convertirFD(this.matrizF[ultima][0])); //valor absoluto mayor de la última fila
+        System.out.println(mayor);
+        this.columnaP = 0; //posición del valor absoluto, columna pivote
+        for(int j=1; j<this.variables; j++){ //recorre el valor de las variables en la última fila
+            System.out.println(this.matriz[ultima][j]);
+            double auxF = Math.abs(this.matriz[ultima][j]);
+            if(auxF>mayor){
                 System.out.println("Entro");
                 mayor = this.matriz[ultima][j];
                 columnaP = j;
@@ -116,6 +174,15 @@ public class SimplexMax {
         int ultima= filas -1; //última fila, donde esta la función objetivo
         for(int j=0; j<this.variables; j++){
             if(this.matriz[ultima][j]<0)return false;
+        }
+        return true;
+    }
+    private boolean verificarNegativosF(){
+        //verifica que en la última fila no haya números negativos, en las variables
+        int filas = this.matrizF.length;
+        int ultima= filas -1; //última fila, donde esta la función objetivo
+        for(int j=0; j<this.variables; j++){
+            if(this.matrizF[ultima][j].getNumerador()<0)return false;
         }
         return true;
     }
