@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simplexmax;
+package objetos;
 
 /**
  *
@@ -111,7 +111,7 @@ public class Fraccion {
         float aux = f.numerador / f.denominador;
         return aux;
     }
-    static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
+    public static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
         Fraccion[][] aux = new Fraccion[matriz.length][matriz[0].length];
         for(int i=0; i<matriz.length; i++){
             for(int j=0; j<matriz[0].length; j++){
@@ -120,7 +120,7 @@ public class Fraccion {
         }
         return aux;
     }
-    boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
+    public boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
         return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
     }
     

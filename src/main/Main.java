@@ -3,7 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package simplexmax;
+package main;
+
+import objetos.Fraccion;
+import objetos.Matriz;
+import simplexmax.SimplexMax;
 
 /**
  *
@@ -42,10 +46,9 @@ public class Main {
         Matriz.imprimirMatriz(Matriz.matrizF);
         SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
         System.out.println();
-        Matriz.imprimirMatriz(sm1.matrizF);
-        
-        
-        
+        Matriz.imprimirMatriz(sm1.getMatrizF());
+        System.out.println();
+        sm1.imprimirSolucion();
     }
     
 }
