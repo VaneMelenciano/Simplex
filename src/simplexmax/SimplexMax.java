@@ -21,6 +21,7 @@ public class SimplexMax {
         this.restricciones=restricciones;
         this.variables=variables;
         this.matriz = matriz;
+        
         proceso();
     }
     private void proceso(){
