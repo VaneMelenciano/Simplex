@@ -47,7 +47,8 @@ public class Fraccion {
     }
 
     public void simplificar(){
-      int mcd = mcd();
+      if(getDenominador()!=1 && getDenominador()!=0){
+          int mcd = mcd();
         setNumerador(getNumerador() / mcd);  
         setDenominador(getDenominador() / mcd);
       if(getNumerador()<0 && getDenominador()<0){
@@ -57,11 +58,13 @@ public class Fraccion {
             setNumerador(getNumerador() * -1); 
             setDenominador(getDenominador() * -1); 
         }
+      }
+      
     }
 
     public Fraccion suma(Fraccion f1){
         Fraccion aux = new Fraccion();
-        aux.setNumerador(this.numerador * f1.getDenominador() + this.denominador * f1.getNumerador()); 
+        aux.setNumerador((this.numerador * f1.getDenominador()) + (this.denominador * f1.getNumerador())); 
         aux.denominador = this.denominador * f1.getDenominador();
         aux.simplificar();  //se simplifica antes de devolverla                                                   
         return aux;
@@ -121,19 +124,20 @@ public class Fraccion {
         return aux;
     }
     public boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
+        /*if(this.numerador<0 && f.numerador<0) return ((numerador*f.getDenominador())<(f.getNumerador()*this.denominador));
+        else if(this.numerador<0 && f.numerador>0) return true;
+        else if(this.numerador>0 && f.numerador<0) return false;*/
+        //System.out.println("Comparar: " + numerador*f.getDenominador() + " con " + f.getNumerador()*this.denominador);
         return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
     }
     
     @Override
     public String toString(){
-      if(getDenominador()!=0){
         simplificar();
-        return (getNumerador()+"/"+getDenominador()); 
-      }else {
-
-         return "El denominador debe ser distinto de 0";
-
-      }
+        if(getDenominador()!=1 && getNumerador()!=0)
+            return String.valueOf(getNumerador()) + "/" + String.valueOf(getDenominador());
+        else //numero enteros
+             return String.valueOf(getNumerador()); 
     }
 
     /**

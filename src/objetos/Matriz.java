@@ -19,6 +19,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import simplexMin.Ecuacion;
 
 /**
  *
@@ -173,7 +174,7 @@ public class Matriz {
     public static void imprimirMatriz(float[][] matriz){
        for(int i=0; i<matriz.length; i++){
             for(float j : matriz[i]){
-               System.out.print(j + "\t"); 
+               System.out.print(j + " "); 
             }
             System.out.println();
         } 
@@ -190,6 +191,11 @@ public class Matriz {
             }
             System.out.println();
         } 
+    }
+
+    public static void imprimirMatriz(Fraccion[][] nueva, Ecuacion[] e) {
+        imprimirMatriz(nueva);
+        Ecuacion.toString(e);
     }
     
 }
