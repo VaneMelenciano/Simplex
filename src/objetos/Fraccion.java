@@ -91,6 +91,13 @@ public class Fraccion {
         aux.setNumerador(aux.getNumerador()*(-1));
         return aux; 
     }
+    public Fraccion dividirAbs(Fraccion f) { //Retortna el valor absoluto
+        Fraccion aux = new Fraccion();
+        aux.setNumerador(Math.abs(this.numerador * f.getDenominador()));
+        aux.setDenominador(Math.abs(this.denominador * f.getNumerador()));
+        aux.simplificar();  //se simplifica antes de devolverla
+        return aux;
+    }
     public static Fraccion convertir(float numero){ //pasa un decimal a fraccion
         //2.5 -> (2.5*10)/10  -> 5/2
         //0.1 -> 1/10
@@ -128,7 +135,9 @@ public class Fraccion {
         else if(this.numerador<0 && f.numerador>0) return true;
         else if(this.numerador>0 && f.numerador<0) return false;*/
         //System.out.println("Comparar: " + numerador*f.getDenominador() + " con " + f.getNumerador()*this.denominador);
-        return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
+        //return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
+        System.out.println("Comparar: " + ((float)this.numerador/this.denominador ) + " " + ((float)f.getNumerador()*f.getDenominador()));
+        return (((float)this.numerador/this.denominador )>((float)f.getNumerador()/f.getDenominador()));
     }
     
     @Override

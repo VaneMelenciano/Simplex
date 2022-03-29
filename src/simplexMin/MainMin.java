@@ -52,18 +52,23 @@ public class MainMin {
         System.out.println();
         sm1.imprimirSolucion();*/
         
-        //
+        //Prueba 1
         Matriz.matriz = Matriz.leerArchivo();
         Ecuacion e1 = new Ecuacion(new Fraccion(0,1), new Fraccion(-2,1));
         Ecuacion e2 = new Ecuacion(new Fraccion(0,1), new Fraccion(-4,1));
+        
         Ecuacion e3 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion e4 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion e5 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
+        
         Ecuacion e6 = new Ecuacion(new Fraccion(-1,1), new Fraccion(0,1));
         Ecuacion e7 = new Ecuacion(new Fraccion(-1,1), new Fraccion(0,1));
         Ecuacion e8 = new Ecuacion(new Fraccion(-1,1), new Fraccion(0,1));
+        
         Ecuacion e9 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};
+        
+        
         //Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println("\n ORIGINAL");
         Fraccion[][] nueva = Fraccion.convertirMatriz(Matriz.matriz);
@@ -74,6 +79,8 @@ public class MainMin {
         System.out.println("\n ULTIMA");
         Matriz.imprimirMatriz(sm.getMatriz());
         Ecuacion.toString(sm.getUltimaFila());
+        System.out.println();
+        sm.imprimirSolucion();
     }
     
 }

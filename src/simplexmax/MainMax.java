@@ -44,11 +44,24 @@ public class MainMax {
         System.out.println();
         Matriz.matrizF = Fraccion.convertirMatriz(Matriz.matriz);
         Matriz.imprimirMatriz(Matriz.matrizF);
-        SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
+            ///DECIMALES
+        //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matriz);
+        //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matriz);
+        //SimplexMax sm3 = new SimplexMax(4, 3, Matriz.matriz);
+        /*SimplexMax sm3 = new SimplexMax(2, 3, Matriz.matriz);
         System.out.println();
-        Matriz.imprimirMatriz(sm1.getMatrizF());
+        Matriz.imprimirMatriz(sm3.getMatriz());
         System.out.println();
-        sm1.imprimirSolucion();
+        sm3.imprimirSolucion();*/
+            //FRACCIONES
+        //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
+        //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
+        //SimplexMax sm3 = new SimplexMax(4, 3, Matriz.matrizF);
+        SimplexMax sm3 = new SimplexMax(3, 3, Matriz.matrizF);
+        System.out.println();
+        Matriz.imprimirMatriz(sm3.getMatrizF());
+        System.out.println();
+        sm3.imprimirSolucionF();
     }
     
 }
