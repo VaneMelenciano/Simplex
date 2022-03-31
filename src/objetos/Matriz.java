@@ -197,5 +197,46 @@ public class Matriz {
         imprimirMatriz(nueva);
         Ecuacion.toString(e);
     }
+
+    public static String imprimirMatriz(Fraccion[][] mat, int var, int res) {
+        String matriz  = "";
+        //PRIMERA FILA
+        int i;
+        for(i=1; i<=var; i++){
+            matriz += "x" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "S" + i + "\t";
+        }
+        matriz += "| Constantes\n";
+        //MATRIZ PRINCIPAL
+        for(i=0; i<mat.length; i++){//recorre la matriz recibida
+            for(int j=0; j<mat[0].length-1; j++){
+                matriz += mat[i][j] + "\t";
+            }
+            matriz += "| " + mat[i][mat[0].length-1] + "\n";
+        }
+        return matriz;
+    }
+    public static String imprimirMatriz(float[][] mat, int var, int res) {
+        String matriz  = "";
+        //PRIMERA FILA
+        int i;
+        for(i=1; i<=var; i++){
+            matriz += "x" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "S" + i + "\t";
+        }
+        matriz += "| Constantes\n";
+        //MATRIZ PRINCIPAL
+        for(i=0; i<mat.length; i++){//recorre la matriz recibida
+            for(int j=0; j<mat[0].length-1; j++){
+                matriz += mat[i][j] + "\t";
+            }
+            matriz += "| " + mat[i][mat[0].length-1] + "\n";
+        }
+        return matriz;
+    }
     
 }

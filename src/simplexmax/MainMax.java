@@ -7,6 +7,7 @@ package simplexmax;
 
 import objetos.Fraccion;
 import objetos.Matriz;
+import objetos.Simplex;
 import simplexmax.SimplexMax;
 
 /**
@@ -40,10 +41,10 @@ public class MainMax {
         
         //Lee matriz flotantes, cambia a fraccion y aplica simplex //
         Matriz.matriz = Matriz.leerArchivo();
-        Matriz.imprimirMatriz(Matriz.matriz);
+        //Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println();
         Matriz.matrizF = Fraccion.convertirMatriz(Matriz.matriz);
-        Matriz.imprimirMatriz(Matriz.matrizF);
+        //Matriz.imprimirMatriz(Matriz.matrizF);
             ///DECIMALES
         //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matriz);
         //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matriz);
@@ -57,11 +58,11 @@ public class MainMax {
         //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
         //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matrizF);
         //SimplexMax sm3 = new SimplexMax(4, 3, Matriz.matrizF);
-        SimplexMax sm3 = new SimplexMax(3, 3, Matriz.matrizF);
+        SimplexMax sm3 = new SimplexMax(2, 3, Matriz.matriz);
+        //System.out.println("IMPRIME RES");
+        //System.out.println(Matriz.imprimirMatriz(sm3.getMatrizF(), 2, 3));
         System.out.println();
-        Matriz.imprimirMatriz(sm3.getMatrizF());
-        System.out.println();
-        sm3.imprimirSolucionF();
+        System.out.println(sm3.getSolucion());
     }
     
 }

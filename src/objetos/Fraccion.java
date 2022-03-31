@@ -136,7 +136,7 @@ public class Fraccion {
         else if(this.numerador>0 && f.numerador<0) return false;*/
         //System.out.println("Comparar: " + numerador*f.getDenominador() + " con " + f.getNumerador()*this.denominador);
         //return ((numerador*f.getDenominador())>(f.getNumerador()*this.denominador));
-        System.out.println("Comparar: " + ((float)this.numerador/this.denominador ) + " " + ((float)f.getNumerador()*f.getDenominador()));
+        //System.out.println("Comparar: " + ((float)this.numerador/this.denominador ) + " " + ((float)f.getNumerador()*f.getDenominador()));
         return (((float)this.numerador/this.denominador )>((float)f.getNumerador()/f.getDenominador()));
     }
     
