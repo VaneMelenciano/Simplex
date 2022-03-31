@@ -307,15 +307,15 @@ public class SimplexMax {
     
     private void imprimirSolucion(){
         solucion += "\nSolución óptima:  ";
-        solucion += "Z: " + this.z + ", "; //Z
+        solucion += "Z: " + String.format("%3.3f", this.z) + ", "; //Z
         //variables
         for(int i=0; i<this.variables-1; i++){
-            solucion += "x" + (i+1) + ": " + this.x[i] + ", ";
-        }solucion += "x" + this.variables + ": " + this.x[this.variables-1] + ", ";
+            solucion += "x" + (i+1) + ": " + String.format("%3.3f", this.x[i]) + ", ";
+        }solucion += "x" + this.variables + ": " + String.format("%3.3f", this.x[this.variables-1]) + ", ";
         //variables flojas - restricciones
         for(int i=0, j=this.variables; i<this.restricciones-1 && j<(this.restricciones+this.variables-1); i++, j++){
-            solucion += "s" + (i+1) + ": " + this.x[j] + ", ";
-        }solucion += "s" + this.restricciones + ": " + this.x[this.x.length-1] + "\n";
+            solucion += "s" + (i+1) + ": " + String.format("%3.3f", this.x[j]) + ", ";
+        }solucion += "s" + this.restricciones + ": " + String.format("%3.3f", this.x[this.x.length-1]) + "\n";
         
         /*for(int i=0; i<this.xF.length; i++){
            solucion += this.xF[i] + ", "; 

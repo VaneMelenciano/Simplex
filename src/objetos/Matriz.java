@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import static java.lang.String.valueOf;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -232,9 +233,10 @@ public class Matriz {
         //MATRIZ PRINCIPAL
         for(i=0; i<mat.length; i++){//recorre la matriz recibida
             for(int j=0; j<mat[0].length-1; j++){
-                matriz += mat[i][j] + "\t";
+                //Para definir numero de decimales: String.format(5.56733D, "%3.3f")
+                matriz += String.format("%3.3f", mat[i][j]) + "\t";
             }
-            matriz += "| " + mat[i][mat[0].length-1] + "\n";
+            matriz += "| " + String.format("%3.3f", mat[i][mat[0].length-1]) + "\n";
         }
         return matriz;
     }
