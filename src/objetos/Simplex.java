@@ -24,6 +24,7 @@ public class Simplex {
         this.variables = v;
         this.matriz = m;
     }
+    
     public static String simplex(TipoSimplex ts, TipoNumero tn, int v, int r, float[][] mD){
         String solucion = "";
         if(ts.equals(TipoSimplex.Maximizacion) && tn.equals(tn.Fraccion)){ //maximizacion con fraccion

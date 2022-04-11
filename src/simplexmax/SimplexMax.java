@@ -77,13 +77,13 @@ public class SimplexMax {
         int ultima= filas -1; //última fila, donde esta la función objetivo
         //System.out.println(ultima);
         float mayor = Math.abs(this.getMatriz()[ultima][0]); //valor absoluto mayor de la última fila
-        //System.out.println(mayor);
+        //System.out.println("\tmayor: " +mayor);
         this.setColumnaP(0); //posición del valor absoluto, columna pivote
         for(int j=1; j<this.variables; j++){ //recorre el valor de las variables en la última fila
-            //System.out.println(this.getMatriz()[ultima][j]);
+            //System.out.println("\tnuevo: " + this.getMatriz()[ultima][j]);
             if(Math.abs(this.getMatriz()[ultima][j])>mayor){
                 //System.out.println("Entro");
-                mayor = this.getMatriz()[ultima][j];
+                mayor = Math.abs(this.getMatriz()[ultima][j]);
                 setColumnaP(j);
             }
         }
@@ -97,7 +97,7 @@ public class SimplexMax {
         for(int i=1; i<filas-1; i++){//columna de constantes
             float aux = (this.getMatriz()[i][columnas-1] / this.getMatriz()[i][columnaP]);
             //System.out.println(this.getMatriz()[i][columnas-1] + "/" + this.getMatriz()[i][columnaP] + " = " + aux);
-            if(aux<menor){
+            if(aux>0 && aux<menor){
                 //System.out.println("entro");
                 menor = aux;
                 setFilaP(i);
@@ -201,6 +201,7 @@ public class SimplexMax {
           }
         }
         solucion += Matriz.imprimirMatriz(getMatriz(), this.variables, this.restricciones);
+        //System.out.println("Columna pivote");
         //Matriz.imprimirMatriz(getMatriz());
     }
     
