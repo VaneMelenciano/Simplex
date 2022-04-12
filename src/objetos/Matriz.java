@@ -27,8 +27,8 @@ import simplexMin.Ecuacion;
  * @author Vanessa
  */
 public class Matriz {
-    public static float[][] matriz;
-    public static Fraccion[][] matrizF;
+    public static float[][] matriz; //matriz de decimales
+    public static Fraccion[][] matrizF; //matriz de fracciones
     public static int restricciones;
     public static int variables;
     
