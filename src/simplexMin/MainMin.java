@@ -53,8 +53,8 @@ public class MainMin {
         sm1.imprimirSolucion();*/
         
         //Prueba 1
-        Matriz.matriz = Matriz.leerArchivo();
-        Ecuacion e1 = new Ecuacion(new Fraccion(0,1), new Fraccion(-2,1));
+        
+        /*Ecuacion e1 = new Ecuacion(new Fraccion(0,1), new Fraccion(-2,1));
         Ecuacion e2 = new Ecuacion(new Fraccion(0,1), new Fraccion(-4,1));
         
         Ecuacion e3 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
@@ -66,21 +66,21 @@ public class MainMin {
         Ecuacion e8 = new Ecuacion(new Fraccion(-1,1), new Fraccion(0,1));
         
         Ecuacion e9 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
-        Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};
+        Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};*/
         
-        
-        //Matriz.imprimirMatriz(Matriz.matriz);
+        Matriz.matriz = Matriz.leerArchivo();
         System.out.println("\n ORIGINAL");
         Fraccion[][] nueva = Fraccion.convertirMatriz(Matriz.matriz);
-        Matriz.imprimirMatriz(nueva, e);
+        Matriz.imprimirMatriz(nueva);
         
-        
-        SimplexMin sm = new SimplexMin(2, 3, nueva, e);
+        int variables = 2;
+        int columnas = 3;
+        SimplexMin sm = new SimplexMin(variables, columnas, nueva);
         System.out.println("\n ULTIMA");
-        Matriz.imprimirMatriz(sm.getMatriz());
-        Ecuacion.toString(sm.getUltimaFila());
-        System.out.println();
-        sm.imprimirSolucion();
+        System.out.println(Matriz.imprimirMatrizMinimizacion(sm.getMatriz(), variables, columnas));
+        //Ecuacion.toString(sm.getUltimaFila());
+        System.out.println(sm.getSolucion());
+        //sm.imprimirSolucion();
     }
     
 }

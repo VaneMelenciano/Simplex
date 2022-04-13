@@ -121,7 +121,7 @@ public class SimplexMax {
         Fraccion menor = this.getMatrizF()[0][columnas-1].dividir(this.getMatrizF()[0][columnaPivote]); //buscar la razón de desplazamineto (menor)
         for(int i=1; i<filas-1; i++){//columna de constantes
             Fraccion aux = this.getMatrizF()[i][columnas-1].dividir(this.getMatrizF()[i][columnaPivote]);
-            if(aux.getNumerador()>0 && menor.compararMayor(aux)){ //aux < menor -> menor > aux
+            if(aux.getNumerador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
                 menor = aux;
                 setFilaP(i);
             }
@@ -233,6 +233,7 @@ public class SimplexMax {
                     xF[t]=this.getMatrizF()[i][this.getMatrizF()[i].length-1];
                 }else if(encontrado == true || this.getMatrizF()[i][t].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
                     xF[t] = new Fraccion(0, 1);
+                    break;
                 }
             }
             t++;

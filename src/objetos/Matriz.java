@@ -240,5 +240,77 @@ public class Matriz {
         }
         return matriz;
     }
-    
+    public static String imprimirMatrizMinimizacion(float[][] mat, int var, int res) {
+        String matriz  = "";
+        //PRIMERA FILA
+        int i;
+        for(i=1; i<=var; i++){
+            matriz += "x" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "S" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "A" + i + "\t";
+        }
+        matriz += "| Constantes\n";
+        //MATRIZ PRINCIPAL
+        for(i=0; i<mat.length-2; i++){//recorre la matriz recibida
+            for(int j=0; j<mat[0].length-1; j++){
+                //Para definir numero de decimales: String.format(5.56733D, "%3.3f")
+                matriz += String.format("%3.3f", mat[i][j]) + "\t";
+            }
+            matriz += "| " + String.format("%3.3f", mat[i][mat[0].length-1]) + "\n";
+        }
+            //última fila (de ecuación)
+        for(int columna=0; columna < mat[0].length; columna++){
+            boolean bandera = false;
+            //Coeficiente
+            if(columna == mat[0].length-1) matriz += "| ";
+            if(mat[mat.length-2][columna]!=0){
+                matriz += String.format("%3.3f", mat[mat.length-2][columna]) + "M";
+                bandera = true;
+            }
+                if(bandera == true && mat[mat.length-1][columna]!=0) matriz += "+";
+                if(mat[mat.length-1][columna]!=0 || bandera == false)matriz+= mat[mat.length-1][columna]; 
+            matriz+= "\t";
+        }
+        return matriz;
+    } 
+    public static String imprimirMatrizMinimizacion(Fraccion[][] mat, int var, int res) {
+        String matriz  = "";
+        //PRIMERA FILA
+        int i;
+        for(i=1; i<=var; i++){
+            matriz += "x" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "S" + i + "\t";
+        }
+        for(i=1; i<=res; i++){
+            matriz += "A" + i + "\t";
+        }
+        matriz += "| Constantes\n";
+        //MATRIZ PRINCIPAL
+        for(i=0; i<mat.length-2; i++){//recorre la matriz recibida
+            for(int j=0; j<mat[0].length-1; j++){
+                matriz += mat[i][j].toString() + "\t";
+            }
+            matriz += "| " + mat[i][mat[0].length-1].toString() + "\n";
+        }
+        //última fila (de ecuación)
+        for(int columna=0; columna < mat[0].length; columna++){
+            boolean bandera = false;
+            //Coeficiente
+            if(columna == mat[0].length-1) matriz += "| ";
+            if(mat[mat.length-2][columna].getNumerador()!=0){
+                matriz += mat[mat.length-2][columna].toString() + "M";
+                bandera = true;
+            }
+                if(bandera == true && mat[mat.length-1][columna].getNumerador()!=0) matriz += "+";
+                if(mat[mat.length-1][columna].getNumerador()!=0 || bandera == false)matriz+= mat[mat.length-1][columna].toString(); 
+            matriz+= "\t";
+        }
+        return matriz;
+    }
 }
