@@ -213,9 +213,9 @@ public class Matriz {
         //MATRIZ PRINCIPAL
         for(i=0; i<mat.length; i++){//recorre la matriz recibida
             for(int j=0; j<mat[0].length-1; j++){
-                matriz += mat[i][j] + "\t";
+                matriz += mat[i][j].toString() + "\t";
             }
-            matriz += "| " + mat[i][mat[0].length-1] + "\n";
+            matriz += "| " + mat[i][mat[0].length-1].toString() + "\n";
         }
         return matriz;
     }

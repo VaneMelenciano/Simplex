@@ -3,16 +3,16 @@ Maximizar p = (1/2)x + 3y + z + 4w sujeto a
 x + y + z + w <= 40
 2x + y - z - w <= 10
 w - y <= 12
-entera w, x, y, z
+Solución óptima: p = 146; w = 26, x = 0, y = 14, z = 0
 
 Prueba 4 (Funciona):
 Maximizar p = x + 2y + 3z sujeto a
 x + y <= 20.5
 y + z <= 20.5
 x + z <= 30.5
-entera x, y, z
+Solución óptima: p = 143/2; x = 10, y = 0, z = 41/2
 
-Prueba 5 (dudad sobre calcular solución óptima de la matriz final):
+Prueba 5 (duda sobre calcular solución óptima de la matriz final):
 Maximizar p = x+y+z sujeto a 
 x+y+z<=1.5
 x+y+z<=.5
@@ -27,8 +27,9 @@ Prueba 7 (Funciona):
 Maximizar p = 50x + 40y sujeto a 
 2x+3y<=1500
 2x+y<=1000
+Solución óptima: p = 28750; x = 375, y = 250
 
-Prueba 8 (Al elegir el pivote en la tercera tabla, toma 4, no -4):
+Prueba 8 (Funciona):
 Maximizar p = 20000x1 + 20000x2 + 20000x3 + 20000x4 sujeto a 
 2x1 + x2 + x3 + 2x4 <= 24
 2x1 +2x2 + x3 <= 20
@@ -39,4 +40,5 @@ Prueba 9 (Funciona):
 Maximizar p = 3x + 2y sujeto a 
 2x+3y<=42
 3x+1y<=24
+Solución óptima: p = 246/7; x = 30/7, y = 78/7
 

@@ -143,8 +143,10 @@ public class Fraccion {
     @Override
     public String toString(){
         simplificar();
-        if(getDenominador()!=1 && getNumerador()!=0)
+        if(getDenominador()!=1 && getNumerador()!=0 && getDenominador()!=0)
             return String.valueOf(getNumerador()) + "/" + String.valueOf(getDenominador());
+        else if(getDenominador()==0)
+            return "0"; 
         else //numero enteros
              return String.valueOf(getNumerador()); 
     }

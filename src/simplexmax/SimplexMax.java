@@ -41,7 +41,7 @@ public class SimplexMax {
         this.restricciones=restricciones;
         this.variables=variables;
         this.matrizFraccion = matriz;
-        
+    
         procesoFraccion();
     }
     
@@ -86,19 +86,22 @@ public class SimplexMax {
                 setColumnaP(j);
             }
         }
-        
         //Razón de desplazamiento (Busca fila pivoteDecimal)
         int columnas = this.getMatriz()[0].length;
-        this.setFilaP(0); //fila pivoteDecimal
-        float menor = (float)(this.getMatriz()[0][columnas-1] / this.getMatriz()[0][columnaPivote]); //buscar la razón de desplazamineto (menor)
-        for(int i=1; i<filas-1; i++){//columna de constantes
+        int fila=0; //fila pivote
+        
+        while(this.matrizDecimal[fila][columnaPivote]<=0 && fila < filas){
+            fila++;
+        }
+        float menor = (float)(this.getMatriz()[fila][columnas-1] / this.getMatriz()[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
+        setFilaP(fila);
+        for(int i=fila+1; i<filas-1; i++){//columna de constantes
             float aux = (this.getMatriz()[i][columnas-1] / this.getMatriz()[i][columnaPivote]);
             if(aux>0 && aux<menor){
                 menor = aux;
                 setFilaP(i);
             }
         }
-        
         actualizarPivote(); //elemento pivoteDecimal está en la posición [filaPivote][columaP]
     }
     
@@ -109,20 +112,25 @@ public class SimplexMax {
         Fraccion mayor = new Fraccion(Math.abs(getMatrizF()[ultima][0].getNumerador()), getMatrizF()[ultima][0].getDenominador());
         this.setColumnaP(0); //posición del valor absoluto, columna pivoteDecimal
         for(int j=1; j<this.variables; j++){ //recorre el valor de las variables en la última fila
-            Fraccion auresultadoVariablesFraccion = new Fraccion(Math.abs(getMatrizF()[ultima][j].getNumerador()), getMatrizF()[ultima][j].getDenominador());
-            if(auresultadoVariablesFraccion.compararMayor(mayor)){ //Math.abs(this.matriz[ultima][j])>mayor
-                mayor = auresultadoVariablesFraccion;
+            Fraccion aux = new Fraccion(Math.abs(getMatrizF()[ultima][j].getNumerador()), getMatrizF()[ultima][j].getDenominador());
+            if(aux.compararMayor(mayor)){ //Math.abs(this.matriz[ultima][j])>mayor
+                mayor = aux;
                 setColumnaP(j);
             }
         }
-        
         //Razón de desplazamiento
         int columnas = this.getMatrizF()[0].length;
-        this.setFilaP(0); //fila pivoteDecimal
-        Fraccion menor = this.getMatrizF()[0][columnas-1].dividir(this.getMatrizF()[0][columnaPivote]); //buscar la razón de desplazamineto (menor)
-        for(int i=1; i<filas-1; i++){//columna de constantes
+        int fila=0; //fila pivote
+        
+        while(this.matrizFraccion[fila][columnaPivote].getNumerador()<=0 && fila < filas){
+            fila++;
+        }
+        
+        Fraccion menor = this.getMatrizF()[fila][columnas-1].dividir(this.getMatrizF()[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
+        setFilaP(fila);
+        for(int i=fila+1; i<filas-1; i++){//columna de constantes
             Fraccion aux = this.getMatrizF()[i][columnas-1].dividir(this.getMatrizF()[i][columnaPivote]);
-            if(aux.getNumerador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+            if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
                 menor = aux;
                 setFilaP(i);
             }
@@ -156,9 +164,7 @@ public class SimplexMax {
         for(int i=0; i<this.getMatriz().length; i++){ //recorre la columa pivoteDecimal
           if(i!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
             float elemento = this.getMatriz()[i][this.columnaPivote];
-            //System.out.println("Elemento: " + elemento);
             float x = (-1)*(elemento/this.getPivoteDecimal()); //buscar un numero que multiplicado por el pivoteDecimal 
-            //System.out.println("X: " + x);
               // y sumado al elemento de la columna pivoteDecimal de como resultado 0
 
             //El número encontrado (x) afecta a toda la fila
@@ -169,19 +175,14 @@ public class SimplexMax {
           }
         }
         solucion += Matriz.imprimirMatriz(getMatriz(), this.variables, this.restricciones);
-        //System.out.println("Columna pivoteDecimal");
-        //Matriz.imprimirMatriz(getMatriz());
     }
     
     private void columnaPivoteivoteFraccion(){
-        //System.out.println("Columna pivoteDecimal");
         for(int i=0; i<this.getMatrizF().length; i++){ //recorre la columa pivoteDecimal
           if(i!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
             Fraccion elemento = this.getMatrizF()[i][this.columnaPivote];
-            //System.out.println("Elemento: " + elemento);
             Fraccion x = elemento.dividirNegativo(getPivoteF()); //al dividir, multiplica por -1 el nominador
             //float x = (-1)*(elemento/this.pivoteDecimal); //buscar un numero que multiplicado por el pivoteDecimal 
-            //System.out.println("X: " + x);
               // y sumado al elemento de la columna pivoteDecimal de como resultado 0
 
             //El número encontrado (x) afecta a toda la fila
@@ -193,6 +194,7 @@ public class SimplexMax {
           }
         }
         solucion += Matriz.imprimirMatriz(getMatrizF(), this.variables, this.restricciones);
+    
     }
     
     private boolean verificarNegativos(){
