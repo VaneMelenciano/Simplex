@@ -77,51 +77,38 @@ public class SimplexMin {
         Fraccion mayor = new Fraccion(this.matrizFraccion[filaCoeficientes][0].getNumerador(), this.matrizFraccion[filaCoeficientes][0].getDenominador());
         System.out.println("Mayor: " + mayor);
         this.columnaPivote=columna; //posición del valor absoluto, columna pivoteFraccion
-        columna++;
-        for(; columna<this.variables+this.restricciones; columna++){ //recorre las columnas solo en la fila de coeficientes
-            Fraccion auresultadoVariablesFraccion = new Fraccion(this.matrizFraccion[filaCoeficientes][columna].getNumerador(), this.matrizFraccion[filaCoeficientes][columna].getDenominador());
-            if(auresultadoVariablesFraccion.compararMayor(mayor)){ //Math.abs(this.matrizFraccion[ultima][j])>mayor
-                mayor = auresultadoVariablesFraccion;
+        for(int i=1; i<this.variables+this.restricciones; i++){ //recorre las columnas solo en la fila de coeficientes
+            Fraccion aux = new Fraccion(this.matrizFraccion[filaCoeficientes][i].getNumerador(), this.matrizFraccion[filaCoeficientes][i].getDenominador());
+            System.out.println("Aux: " + aux);
+            if(aux.compararMayor(mayor)){ //Math.abs(this.matrizFraccion[ultima][j])>mayor
+                mayor = aux;
                 System.out.println("Mayor nuevo: " + mayor);
-                this.columnaPivote=columna;
+                this.columnaPivote=i;
             }
         }
         System.out.println("\nColumnaP: " + this.columnaPivote);
         
         //Razón de desplazamiento //CHECAR
         int numColumnas = this.matrizFraccion[0].length;
-        this.filapivote=0; //fila pivoteFraccion
         int fila=0; //recorre las filas de la columna pivoteFraccion
-        while(this.matrizFraccion[fila][columnaPivote].getNumerador()<0 && fila < filaCoeficientes){
+        while(this.matrizFraccion[fila][columnaPivote].getNumerador()<=0 && fila < filaCoeficientes){
             fila++;
         }
-        /*if(fila==numFilas-2){ //si todos son negativos (la columna) //MAL
-           int m=0;
-           Fraccion menor = this.matrizFraccion[m][numColumnas-1].dividir(this.matrizFraccion[m][columnaPivote]);
-           for(; m<numFilas; m++){//columna de constantes
-                Fraccion aux = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[m][columnaPivote]);
-                System.out.println("Comparar: " + menor + " con " + aux);
-                if(aux.getNumerador()>=0 && menor.compararMayor(aux)){ //aux < menor -> menor > aux
-                    menor = aux;
-                    this.filapivote=m;
-                    System.out.println("Menor: " + menor);
-                }
-            } 
-        }else{*/
+        
            Fraccion menor = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
-            //System.out.println("Menor: " + menor); 
+            
+            System.out.println("Menor: " + menor + " Fila: " + fila); 
             this.filapivote=fila;
-            fila++;
-            for(; fila<filaCoeficientes; fila++){//columna de constantes
-                Fraccion aux = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[fila][columnaPivote]);
-                //System.out.println("Comparar: " + menor + " con " + aux);
-                if(aux.getNumerador()>=0 && menor.compararMayor(aux)){ //no tomar negativos //aux < menor -> menor > aux
+            for(int i=fila+1; i<filaCoeficientes; i++){//columna de constantes
+                Fraccion aux = this.matrizFraccion[i][numColumnas-1].dividir(this.matrizFraccion[i][columnaPivote]);
+                System.out.println("Comparar: " + menor + " con " + aux);
+                
+                if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
                     menor = aux;
-                    this.filapivote=fila;
-                    //System.out.println("Menor: " + menor);
+                    this.filapivote=i;
+                    System.out.println("Nuevo menor: " + menor + "  fila: " + this.filapivote);
                 }
             }
-        //}
             System.out.println("FilaP: " + this.filapivote);
             actualizarPivoteFraccion();
             System.out.println("\nPivote: " + this.pivoteFraccion);
@@ -223,8 +210,9 @@ public class SimplexMin {
             solucion += "X" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
         }
         //variables flojas - restricciones
-        for(i=0, j=this.variables; i<this.restricciones && j<(this.restricciones+this.variables-1); i++, j++){
+        for(i=0, j=this.variables; i<this.restricciones && j<(this.restricciones+this.variables); i++, j++){
             solucion += "S" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
+            
         }
         //variables artificiales
         for(i=0, j=this.restricciones+this.variables; i<this.restricciones-1 && j<(this.matrizFraccion[0].length-1); i++, j++){

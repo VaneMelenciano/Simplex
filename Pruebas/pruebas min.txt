@@ -11,6 +11,7 @@ x + y >= 20.5
 y + z >= 20.5
 x + z >= 30.5
 Solución óptima: p = 71.5; x = 15.25, y = 5.25, z = 15.25
+Solución óptima: p = 143/2; x = 61/4, y = 21/4, z = 61/4
 
 Prueba 5:
 minimizar p = x+y+z sujeto a 
