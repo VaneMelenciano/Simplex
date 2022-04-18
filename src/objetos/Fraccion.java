@@ -117,12 +117,22 @@ public class Fraccion {
         auxF.simplificar();
         return auxF;
     }
-    public static float convertirFD(Fraccion f){ //pasa un fraccion a decimal
+    public static float convertir(Fraccion f){ //pasa un fraccion a decimal
         float aux = f.numerador / f.denominador;
-        return aux;
+
+        return Float.valueOf(String.format("%3.3f", aux));
     }
     public static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
         Fraccion[][] aux = new Fraccion[matriz.length][matriz[0].length];
+        for(int i=0; i<matriz.length; i++){
+            for(int j=0; j<matriz[0].length; j++){
+                aux[i][j] = convertir(matriz[i][j]);
+            }
+        }
+        return aux;
+    }
+    public static float[][] convertirMatriz(Fraccion[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
+        float[][] aux = new float[matriz.length][matriz[0].length];
         for(int i=0; i<matriz.length; i++){
             for(int j=0; j<matriz[0].length; j++){
                 aux[i][j] = convertir(matriz[i][j]);
