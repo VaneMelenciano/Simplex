@@ -67,17 +67,18 @@ public class MainMin {
         
         Ecuacion e9 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};*/
+        int variables = 3;
+        int restricciones = 3;
         
         Matriz.matriz = Matriz.leerArchivo();
         System.out.println("\n ORIGINAL");
         Fraccion[][] nueva = Fraccion.convertirMatriz(Matriz.matriz);
-        Matriz.imprimirMatriz(nueva);
+         System.out.println(Matriz.imprimirMatriz(nueva, variables, restricciones) + "\n");
         
-        int variables = 2;
-        int columnas = 3;
-        SimplexMin sm = new SimplexMin(variables, columnas, nueva);
+        
+        SimplexMin sm = new SimplexMin(variables, restricciones, nueva);
         System.out.println("\n ULTIMA");
-        System.out.println(Matriz.imprimirMatrizMinimizacion(sm.getMatriz(), variables, columnas));
+        System.out.println(Matriz.imprimirMatrizMinimizacion(sm.getMatrizFraccion(), variables, restricciones));
         //Ecuacion.toString(sm.getUltimaFila());
         System.out.println(sm.getSolucion());
         //sm.imprimirSolucion();

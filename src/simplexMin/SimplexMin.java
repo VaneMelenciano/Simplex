@@ -22,225 +22,228 @@ la última es el valor independiente
  3M+4 -> 3 es coeficiente, 4 es independiente
 */
 public class SimplexMin {
-    int restricciones;
-    int variables;
-    private Fraccion[][] matriz;
-    //private Ecuacion[] ultimaFila;
-    int filaP;
-    int columnaP;
-    Fraccion pivote;
-    private Fraccion zF; //solucion z con fraccion
-    private Fraccion[] xF; //solucion x con fraccion
+    private int restricciones;
+    private int variables;
+    private Fraccion[][] matrizFraccion;
+    private float[][] matrizDecimal;
+    private int filapivote;
+    private int columnaPivote;
+    private Fraccion pivoteFraccion;
+    private float pivoteDecimal;
+    private Fraccion resultadoFraccion; //solucion z con fraccion
+    private float resultadoDecimal; //solucion z con fraccion
+    private Fraccion[] resultadoVariablesFraccion; //solucion x con fraccion
+    private float[] resultadoVariablesDecimal; //solucion x con fraccion
     private String solucion="";
-    //Todas las funciones que tengan una F al final, son las que trabajan con la matriz de funciones
-    public SimplexMin(int variables, int restricciones, Fraccion[][] matriz){//, Ecuacion[] ultimaFila){
+    //Todas las funciones que tengan una F al final, son las que trabajan con la matrizFraccion de funciones
+    public SimplexMin(int variables, int restricciones, Fraccion[][] matriz){
         this.restricciones=restricciones;
         this.variables=variables;
-        this.matriz = matriz;
-        //this.ultimaFila = ultimaFila; //se recibe ya con las M (tipo ecuacion)
-        procesoF();
+        this.matrizFraccion = matriz;
+        procesoFraccion();
     }
 
-    private void procesoF() {
-        multiplicarMF(); 
-        buscarPivoteF();
-        filaPivoteF();
-        columnaPivoteF();
-        while(!verificarM()){ //miestras sigan existiendo M última fila, donde están las constantes
+    private void procesoFraccion() {
+        multiplicarMFraccion(); 
+        buscarPivoteFraccion();
+        filaPivoteFraccion();
+        columnaPivoteivoteFraccion();
+        while(!verificarMFraccion()){ //miestras sigan existiendo M última fila, donde están las constantes
             //Mientras la fila de coeficientes en la última columna, no tenga 0
-            buscarPivoteF();
-            filaPivoteF();
-            columnaPivoteF();
+            buscarPivoteFraccion();
+            filaPivoteFraccion();
+            columnaPivoteivoteFraccion();
         }
-        buscarSolucionF();
+        buscarSolucionFraccion();
     }
 
-    private void multiplicarMF() { //Multiplica por m cada numero de cada columna y lo suma al último
-        for(int columna=0; columna<this.matriz[0].length; columna++){
-            Fraccion resultado = this.matriz[0][columna];//coeficiente de la ecuacion
-                for(int fila=1; fila<this.getMatriz().length-1; fila++){ //dice que fila es
-                    resultado = resultado.suma(this.matriz[fila][columna]);
+    private void multiplicarMFraccion() { //Multiplica por m cada numero de cada columna y lo suma al último
+        for(int columna=0; columna<this.matrizFraccion[0].length; columna++){
+            Fraccion resultado = this.matrizFraccion[0][columna];//coeficiente de la ecuacion
+                for(int fila=1; fila<this.getMatrizFraccion().length-1; fila++){ //dice que fila es
+                    resultado = resultado.suma(this.matrizFraccion[fila][columna]);
                 } 
-               this.matriz[this.matriz.length-2][columna] = resultado;//fila de las constantes
+               this.matrizFraccion[this.matrizFraccion.length-2][columna] = resultado;//fila de las constantes
                
-        }System.out.println();Matriz.imprimirMatriz(matriz);System.out.println();
+        }System.out.println(Matriz.imprimirMatriz(matrizFraccion, this.variables, this.restricciones));System.out.println();
+        
     }
     
-    private void buscarPivoteF() {
+    private void buscarPivoteFraccion() {
         //Columna: se elige con la ecuación que tenga mayor absoluto coeficiente de la última fila
-        int numFilas = this.getMatriz().length;
-        int filaCoeficientes = this.matriz.length-2;
+        int numFilas = this.getMatrizFraccion().length;
+        int filaCoeficientes = this.matrizFraccion.length-2;
         int columna=0;
-        Fraccion mayor = new Fraccion(this.matriz[filaCoeficientes][0].getNumerador(), this.matriz[filaCoeficientes][0].getDenominador());
+        Fraccion mayor = new Fraccion(this.matrizFraccion[filaCoeficientes][0].getNumerador(), this.matrizFraccion[filaCoeficientes][0].getDenominador());
         System.out.println("Mayor: " + mayor);
-        this.columnaP=columna; //posición del valor absoluto, columna pivote
+        this.columnaPivote=columna; //posición del valor absoluto, columna pivoteFraccion
         columna++;
         for(; columna<this.variables+this.restricciones; columna++){ //recorre las columnas solo en la fila de coeficientes
-            Fraccion auxF = new Fraccion(this.matriz[filaCoeficientes][columna].getNumerador(), this.matriz[filaCoeficientes][columna].getDenominador());
-            if(auxF.compararMayor(mayor)){ //Math.abs(this.matriz[ultima][j])>mayor
-                mayor = auxF;
+            Fraccion auresultadoVariablesFraccion = new Fraccion(this.matrizFraccion[filaCoeficientes][columna].getNumerador(), this.matrizFraccion[filaCoeficientes][columna].getDenominador());
+            if(auresultadoVariablesFraccion.compararMayor(mayor)){ //Math.abs(this.matrizFraccion[ultima][j])>mayor
+                mayor = auresultadoVariablesFraccion;
                 System.out.println("Mayor nuevo: " + mayor);
-                this.columnaP=columna;
+                this.columnaPivote=columna;
             }
         }
-        System.out.println("\nColumnaP: " + this.columnaP);
+        System.out.println("\nColumnaP: " + this.columnaPivote);
         
         //Razón de desplazamiento //CHECAR
-        int numColumnas = this.matriz[0].length;
-        this.filaP=0; //fila pivote
-        int fila=0; //recorre las filas de la columna pivote
-        while(this.matriz[fila][columnaP].getNumerador()<0 && fila < filaCoeficientes){
+        int numColumnas = this.matrizFraccion[0].length;
+        this.filapivote=0; //fila pivoteFraccion
+        int fila=0; //recorre las filas de la columna pivoteFraccion
+        while(this.matrizFraccion[fila][columnaPivote].getNumerador()<0 && fila < filaCoeficientes){
             fila++;
         }
         /*if(fila==numFilas-2){ //si todos son negativos (la columna) //MAL
            int m=0;
-           Fraccion menor = this.matriz[m][numColumnas-1].dividir(this.matriz[m][columnaP]);
+           Fraccion menor = this.matrizFraccion[m][numColumnas-1].dividir(this.matrizFraccion[m][columnaPivote]);
            for(; m<numFilas; m++){//columna de constantes
-                Fraccion aux = this.matriz[fila][numColumnas-1].dividir(this.matriz[m][columnaP]);
+                Fraccion aux = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[m][columnaPivote]);
                 System.out.println("Comparar: " + menor + " con " + aux);
                 if(aux.getNumerador()>=0 && menor.compararMayor(aux)){ //aux < menor -> menor > aux
                     menor = aux;
-                    this.filaP=m;
+                    this.filapivote=m;
                     System.out.println("Menor: " + menor);
                 }
             } 
         }else{*/
-           Fraccion menor = this.matriz[fila][numColumnas-1].dividir(this.matriz[fila][columnaP]); //buscar la razón de desplazamineto (menor)
+           Fraccion menor = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
             //System.out.println("Menor: " + menor); 
-            this.filaP=fila;
+            this.filapivote=fila;
             fila++;
             for(; fila<filaCoeficientes; fila++){//columna de constantes
-                Fraccion aux = this.matriz[fila][numColumnas-1].dividir(this.matriz[fila][columnaP]);
+                Fraccion aux = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[fila][columnaPivote]);
                 //System.out.println("Comparar: " + menor + " con " + aux);
                 if(aux.getNumerador()>=0 && menor.compararMayor(aux)){ //no tomar negativos //aux < menor -> menor > aux
                     menor = aux;
-                    this.filaP=fila;
+                    this.filapivote=fila;
                     //System.out.println("Menor: " + menor);
                 }
             }
         //}
-            System.out.println("FilaP: " + this.filaP);
-            actualizarPivoteF();
-            System.out.println("\nPivote: " + this.pivote);
-            //elemento pivote está en la posición [filaP][columaP] 
+            System.out.println("FilaP: " + this.filapivote);
+            actualizarPivoteFraccion();
+            System.out.println("\nPivote: " + this.pivoteFraccion);
+            //elemento pivoteFraccion está en la posición [filapivote][columaP] 
     }
     
-    private void filaPivoteF(){
-        //número que multiplicado por el pivote de como resultado 1
-        //O sea, el reciproco del pivote
-        //float reciproco = (float) Math.pow(pivote, -1.0);
-        Fraccion reciproco = new Fraccion(this.pivote.getDenominador(), this.pivote.getNumerador());
-        //el reciproco afecta a toda la fila pivote
-        for(int columna=0; columna<this.matriz[0].length; columna++){ //recorre la filaP
-            this.matriz[this.filaP][columna]= this.matriz[this.filaP][columna].multiplicar(reciproco);
+    private void filaPivoteFraccion(){
+        //número que multiplicado por el pivoteFraccion de como resultado 1
+        //O sea, el reciproco del pivoteFraccion
+        //float reciproco = (float) Math.pow(pivoteFraccion, -1.0);
+        Fraccion reciproco = new Fraccion(this.pivoteFraccion.getDenominador(), this.pivoteFraccion.getNumerador());
+        //el reciproco afecta a toda la fila pivoteFraccion
+        for(int columna=0; columna<this.matrizFraccion[0].length; columna++){ //recorre la filapivote
+            this.matrizFraccion[this.filapivote][columna]= this.matrizFraccion[this.filapivote][columna].multiplicar(reciproco);
         }
-        actualizarPivoteF();
-        System.out.println("\nFila pivote : " + this.filaP);
-        Matriz.imprimirMatriz(this.matriz);
+        actualizarPivoteFraccion();
+        System.out.println("\nFila pivote : " + this.filapivote);
+        System.out.println(Matriz.imprimirMatriz(this.matrizFraccion, this.variables, this.restricciones));
     }
     
-    private void columnaPivoteF(){ //hace a toda la columna pivote 0, menos al pivote
-        //System.out.println("\nColumna pivote");
-        for(int fila=0; fila<this.matriz.length-2; fila++){ //recorre la columa pivote de la matriz principal (sin contar ultima fila)
-          if(fila!=this.filaP){ //para que no aplique esto a la fila pivote
-            Fraccion elemento = this.getMatriz()[fila][this.columnaP];
+    private void columnaPivoteivoteFraccion(){ //hace a toda la columna pivoteFraccion 0, menos al pivoteFraccion
+        //System.out.println("\nColumna pivoteFraccion");
+        for(int fila=0; fila<this.matrizFraccion.length-2; fila++){ //recorre la columa pivoteFraccion de la matrizFraccion principal (sin contar ultima fila)
+          if(fila!=this.filapivote){ //para que no aplique esto a la fila pivoteFraccion
+            Fraccion elemento = this.getMatrizFraccion()[fila][this.columnaPivote];
             //System.out.println("Elemento: " + elemento);
-            Fraccion x = elemento.dividirNegativo(this.pivote); //al dividir, multiplica por -1 el nominador
-            //float x = (-1)*(elemento/this.pivote); //buscar un numero que multiplicado por el pivote 
+            Fraccion x = elemento.dividirNegativo(this.pivoteFraccion); //al dividir, multiplica por -1 el nominador
+            //float x = (-1)*(elemento/this.pivoteFraccion); //buscar un numero que multiplicado por el pivoteFraccion 
             //System.out.println("X: " + x);
-              // y sumado al elemento de la columna pivote de como resultado 0
+              // y sumado al elemento de la columna pivoteFraccion de como resultado 0
 
             //El número encontrado (x) afecta a toda la fila
-            for(int columna=0; columna<this.getMatriz()[0].length; columna++){ //recorre la fila que se ve afectada por x
-                //this.matriz[i][j] += (x*this.matriz[this.filaP][j]); //el número (x) se multiplica
-                this.matriz[fila][columna] =  this.getMatriz()[fila][columna].suma(this.getMatriz()[this.filaP][columna].multiplicar(x));//el número (x) se multiplica
-                //por el elemento que esté en la fila pivote, el la misma columa (j) del elemento afectado
+            for(int columna=0; columna<this.getMatrizFraccion()[0].length; columna++){ //recorre la fila que se ve afectada por x
+                //this.matrizFraccion[i][j] += (x*this.matrizFraccion[this.filapivote][j]); //el número (x) se multiplica
+                this.matrizFraccion[fila][columna] =  this.getMatrizFraccion()[fila][columna].suma(this.getMatrizFraccion()[this.filapivote][columna].multiplicar(x));//el número (x) se multiplica
+                //por el elemento que esté en la fila pivoteFraccion, el la misma columa (j) del elemento afectado
             }
           }
         }
-        //elemento de la columa pivote de la última fila
-        Fraccion elementoCoeficiente = this.matriz[this.matriz.length-2][this.columnaP];
-        Fraccion elementoIndependiente = this.matriz[this.matriz.length-1][this.columnaP];
-        //(-1)*(elemento/this.pivote); //buscar un numero que multiplicado por el pivote y sumado al elemento de la columna pivote de como resultado 0
-        Fraccion x1 = elementoCoeficiente.dividirNegativo(this.pivote);
-        Fraccion x2 = elementoIndependiente.dividirNegativo(this.pivote);
+        //elemento de la columa pivoteFraccion de la última fila
+        Fraccion elementoCoeficiente = this.matrizFraccion[this.matrizFraccion.length-2][this.columnaPivote];
+        Fraccion elementoIndependiente = this.matrizFraccion[this.matrizFraccion.length-1][this.columnaPivote];
+        //(-1)*(elemento/this.pivoteFraccion); //buscar un numero que multiplicado por el pivoteFraccion y sumado al elemento de la columna pivoteFraccion de como resultado 0
+        Fraccion x1 = elementoCoeficiente.dividirNegativo(this.pivoteFraccion);
+        Fraccion x2 = elementoIndependiente.dividirNegativo(this.pivoteFraccion);
         //Ecuacion x = new Ecuacion(x1, x2);
         System.out.println("\nX: " + x1 + "  " + x2);
          //El número encontrado (x) afecta a toda la fila (ultima fila en este caso)
-            for(int columna=0; columna<this.matriz[0].length; columna++){ 
+            for(int columna=0; columna<this.matrizFraccion[0].length; columna++){ 
                 /*x*P + E*/
                 //coeficientes
-                this.matriz[this.matriz.length-2][columna] = this.matriz[this.matriz.length-2][columna].suma(x1.multiplicar(this.matriz[this.filaP][columna]));
+                this.matrizFraccion[this.matrizFraccion.length-2][columna] = this.matrizFraccion[this.matrizFraccion.length-2][columna].suma(x1.multiplicar(this.matrizFraccion[this.filapivote][columna]));
                 //Independientes
-                this.matriz[this.matriz.length-1][columna] = this.matriz[this.matriz.length-1][columna].suma(x2.multiplicar(this.matriz[this.filaP][columna]));
-                //por el elemento que esté en la fila pivote, el la misma columa (j) del elemento afectado
+                this.matrizFraccion[this.matrizFraccion.length-1][columna] = this.matrizFraccion[this.matrizFraccion.length-1][columna].suma(x2.multiplicar(this.matrizFraccion[this.filapivote][columna]));
+                //por el elemento que esté en la fila pivoteFraccion, el la misma columa (j) del elemento afectado
             }
-        System.out.println("\nColumna pivote: " + this.columnaP);
-        Matriz.imprimirMatriz(getMatriz());
+        System.out.println("\nColumna pivote: " + this.columnaPivote);
+        System.out.println(Matriz.imprimirMatriz(getMatrizFraccion(), this.variables, this.restricciones));
     }
     
-    private void actualizarPivoteF() {
-        this.pivote = this.matriz[this.filaP][this.columnaP];
+    private void actualizarPivoteFraccion() {
+        this.pivoteFraccion = this.matrizFraccion[this.filapivote][this.columnaPivote];
     }
     
-     private boolean verificarM() {
-         if(this.matriz[this.matriz.length-2][this.matriz[0].length-1].getNumerador()!=0) return false;
+     private boolean verificarMFraccion() {
+         if(this.matrizFraccion[this.matrizFraccion.length-2][this.matrizFraccion[0].length-1].getNumerador()!=0) return false;
          return true;
      }
      
-     private void buscarSolucionF() { //funcion para buscar la solucion con fraccion de las variables
-        zF = this.getMatriz()[this.getMatriz().length-1][this.getMatriz()[0].length-1];
-        xF = new Fraccion[this.variables+(this.restricciones*2)];
+     private void buscarSolucionFraccion() { //funcion para buscar la solucion con fraccion de las variables
+        resultadoFraccion = this.getMatrizFraccion()[this.getMatrizFraccion().length-1][this.getMatrizFraccion()[0].length-1];
+        resultadoVariablesFraccion = new Fraccion[this.variables+(this.restricciones*2)];
         int columna = 0; //columna
-        while(columna<this.matriz[0].length-1){
+        while(columna<this.matrizFraccion[0].length-1){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
             System.out.println("\n");
-            for(int fila=0; fila<this.getMatriz().length-2; fila++){ //fila
-                System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matriz[fila][columna]);
-                if(this.getMatriz()[fila][columna].getNumerador()==1 && this.getMatriz()[fila][columna].getDenominador()==1 &&encontrado==false){
-                    xF[columna]=this.getMatriz()[fila][this.getMatriz()[fila].length-1];
+            for(int fila=0; fila<this.getMatrizFraccion().length-2; fila++){ //fila
+                System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matrizFraccion[fila][columna]);
+                if(this.getMatrizFraccion()[fila][columna].getNumerador()==1 && this.getMatrizFraccion()[fila][columna].getDenominador()==1 &&encontrado==false){
+                    resultadoVariablesFraccion[columna]=this.getMatrizFraccion()[fila][this.getMatrizFraccion()[fila].length-1];
                     System.out.println("Primer if");
-                }else if(encontrado == true || this.getMatriz()[fila][columna].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
-                    xF[columna] = new Fraccion(0, 1);
+                }else if(encontrado == true || this.getMatrizFraccion()[fila][columna].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
+                    resultadoVariablesFraccion[columna] = new Fraccion(0, 1);
                     System.out.println("Segundo if");
                     break;
                 }
             }
             columna++;
         }
-        imprimirSolucionF();
+        imprimirSolucionFraccion();
     }
      
-    private void imprimirSolucionF(){
+    private void imprimirSolucionFraccion(){
         solucion += "\nSolución óptima:  ";
-        solucion += "Z: " + this.zF + ", "; //Z
+        solucion += "Z: " + this.resultadoFraccion + ", "; //Z
         //variables
         int i, j;
         for(i=0; i<this.variables; i++){
-            solucion += "X" + (i+1) + ": " + this.xF[i] + ", ";
+            solucion += "X" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
         }
         //variables flojas - restricciones
         for(i=0, j=this.variables; i<this.restricciones && j<(this.restricciones+this.variables-1); i++, j++){
-            solucion += "S" + (i+1) + ": " + this.xF[j] + ", ";
+            solucion += "S" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
         }
         //variables artificiales
-        for(i=0, j=this.restricciones+this.variables; i<this.restricciones-1 && j<(this.matriz[0].length-1); i++, j++){
-            solucion += "A" + (i+1) + ": " + this.xF[j] + ", ";
-        }solucion += "A" + this.restricciones + ": " + this.xF[this.xF.length-1] + "\n";
+        for(i=0, j=this.restricciones+this.variables; i<this.restricciones-1 && j<(this.matrizFraccion[0].length-1); i++, j++){
+            solucion += "A" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
+        }solucion += "A" + this.restricciones + ": " + this.resultadoVariablesFraccion[this.resultadoVariablesFraccion.length-1] + "\n";
     }
     
-    public void imprimirSolucion(){
-        System.out.println("Z: " + this.zF); //Z
+    public void imprimirSolucionF(){
+        System.out.println("Z: " + this.resultadoFraccion); //Z
         
-        for(int i=0; i<this.xF.length; i++){
-            System.out.println(this.xF[i]);
+        for(int i=0; i<this.resultadoVariablesFraccion.length; i++){
+            System.out.println(this.resultadoVariablesFraccion[i]);
         }
     }
     /**
-     * @return the matriz
+     * @return the matrizFraccion
      */
-    public Fraccion[][] getMatriz() {
-        return matriz;
+    public Fraccion[][] getMatrizFraccion() {
+        return matrizFraccion;
     }
     public String getSolucion(){
         return this.solucion;

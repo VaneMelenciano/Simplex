@@ -15,8 +15,8 @@ public class MainPruebas {
     public static void main(String[] args) {
         //MARICES FLOTANTES//
         Matriz.matriz = Matriz.leerArchivo();  //matriz hecha a partir de las ecuaciones, con enteros y decimales
-        int variables = 4, restricciones = 4;
-        System.out.println(Simplex.simplex(TipoSimplex.Maximizacion, TipoNumero.Decimal, variables, restricciones, Matriz.matriz));
+        int variables = 4, restricciones = 3;
+        System.out.println(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Fraccion, variables, restricciones, Matriz.matriz));
         //Falta sustituir los valores de las solucion optima en 
         //función objetivo y restricciones
     }

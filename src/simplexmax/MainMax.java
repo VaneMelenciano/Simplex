@@ -55,7 +55,7 @@ public class MainMax {
         System.out.println();
         sm3.imprimirSolucion();*/
             //FRACCIONES
-        SimplexMax sm3 = new SimplexMax(2, 2, Matriz.matriz);
+        SimplexMax sm3 = new SimplexMax(4, 3, Matriz.matrizF);
         //System.out.println("IMPRIME RES");
         //System.out.println(Matriz.imprimirMatriz(sm3.getMatrizF(), 2, 3));
         System.out.println();

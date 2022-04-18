@@ -5,6 +5,7 @@
  */
 package objetos;
 
+import simplexMin.SimplexMin;
 import simplexmax.SimplexMax;
 
 /**
@@ -35,7 +36,9 @@ public class Simplex {
             SimplexMax sm = new SimplexMax(variables, restricciones, mD);
             solucion = sm.getSolucion();
         }else if(tipoSimplex.equals(TipoSimplex.Minimizacion) && tipoNumero.equals(tipoNumero.Fraccion)){ //Minimizacion con fraccion
-            
+            Fraccion[][] mF = Fraccion.convertirMatriz(mD);
+            SimplexMin sm = new SimplexMin(variables, restricciones, mF);
+            solucion = sm.getSolucion();
         }else{//minimizacion con decimal
             
         }
