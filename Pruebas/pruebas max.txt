@@ -35,6 +35,7 @@ Maximizar p = 20000x1 + 20000x2 + 20000x3 + 20000x4 sujeto a
 2x1 +2x2 + x3 <= 20
 2x3 + 2x4 <= 20
 4x4 <= 16
+Solución óptima: p = 340000; x1 = 3, x2 = 4, x3 = 6, x4 = 4
 
 Prueba 9 (Funciona):
 Maximizar p = 3x + 2y sujeto a 

@@ -13,18 +13,26 @@ import simplexmax.SimplexMax;
  * @author Vanessa
  */
 public class Simplex {
-    private TipoSimplex tipoSimplex;
+    /*private TipoSimplex tipoSimplex;
     private TipoNumero tipoNumero;
     private int variables;
     private int restricciones;
-    private float[][] matriz;
+    private float[][] matrizDecimal;
+    private Fraccion[][] matrizFraccion;
     public Simplex(TipoSimplex tipoSimplex, TipoNumero tipoNumero, int variables, int restricciones, float[][] m){
         this.tipoNumero = tipoNumero;
         this.tipoSimplex = tipoSimplex;
         this.restricciones = restricciones;
         this.variables = variables;
-        this.matriz = m;
+        this.matrizDecimal = m;
     }
+    public Simplex(TipoSimplex tipoSimplex, TipoNumero tipoNumero, int variables, int restricciones, Fraccion[][] m){
+        this.tipoNumero = tipoNumero;
+        this.tipoSimplex = tipoSimplex;
+        this.restricciones = restricciones;
+        this.variables = variables;
+        this.matrizFraccion = m;
+    }*/
     
     public static String simplex(TipoSimplex tipoSimplex, TipoNumero tipoNumero, int variables, int restricciones, float[][] mD){
         String solucion = "";
@@ -41,6 +49,18 @@ public class Simplex {
             solucion = sm.getSolucion();
         }else{//minimizacion con decimal
             
+        }
+        return solucion;
+    }
+    //Si se recibe como FRACCION la matriz
+    public static String simplex(TipoSimplex tipoSimplex, int variables, int restricciones, Fraccion[][] matriz){
+        String solucion = "";
+        if(tipoSimplex.equals(TipoSimplex.Maximizacion)){ //maximizacion con fraccion
+            SimplexMax sm = new SimplexMax(variables, restricciones, matriz);
+            solucion = sm.getSolucion();
+        }else if(tipoSimplex.equals(TipoSimplex.Minimizacion)){ //Minimizacion con fraccion
+            SimplexMin sm = new SimplexMin(variables, restricciones, matriz);
+            solucion = sm.getSolucion();
         }
         return solucion;
     }

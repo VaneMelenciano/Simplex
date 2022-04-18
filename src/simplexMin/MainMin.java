@@ -7,7 +7,6 @@ package simplexMin;
 
 import objetos.Fraccion;
 import objetos.Matriz;
-import simplexMin.Ecuacion;
 import simplexMin.SimplexMin;
 import simplexmax.SimplexMax;
 

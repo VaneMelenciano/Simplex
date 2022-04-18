@@ -20,7 +20,6 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import simplexMin.Ecuacion;
 
 /**
  *
@@ -192,11 +191,6 @@ public class Matriz {
             }
             System.out.println();
         } 
-    }
-
-    public static void imprimirMatriz(Fraccion[][] nueva, Ecuacion[] e) {
-        imprimirMatriz(nueva);
-        Ecuacion.toString(e);
     }
 
     public static String imprimirMatriz(Fraccion[][] mat, int var, int res) {
