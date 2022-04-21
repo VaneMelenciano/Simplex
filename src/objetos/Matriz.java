@@ -273,58 +273,100 @@ public class Matriz {
         matriz+="\n";
         return matriz;
     } 
+    
+    private static String matrizCompleta;
     public static String imprimirMatrizMinimizacion(Fraccion[][] mat, int var, int res) {
-        String matriz  = "";
+        matrizCompleta  = "";
         boolean auxExiteEcuacionLarga[] = new boolean[mat[0].length-1];
         //PRIMERA FILA
         int i, columnaAux = 0;
         for(i=1; i<=var; i++){
-            matriz += "x" + i + "\t";
-                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
-                    matriz += "\t";
+            matrizCompleta += "x" + i + "\t";
+                if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                    matrizCompleta += "\t";
                     auxExiteEcuacionLarga[columnaAux] = true;
-                } columnaAux++;
+                }
+                columnaAux++;
         }
         for(i=1; i<=res; i++){
-            matriz += "S" + i + "\t";
-                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
-                    matriz += "\t";
+            matrizCompleta += "S" + i + "\t";
+                if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                    matrizCompleta += "\t";
                     auxExiteEcuacionLarga[columnaAux] = true;
-                } columnaAux++;
+                }
+                columnaAux++; 
         }
         for(i=1; i<=res; i++){
-            matriz += "A" + i + "\t";
-                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
-                    matriz += "\t";
+            matrizCompleta += "A" + i + "\t";
+                if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                    matrizCompleta += "\t";
                     auxExiteEcuacionLarga[columnaAux] = true;
-                } columnaAux++;
+                }
+                columnaAux++;
         }
-        matriz += "| Constantes\n";
+        matrizCompleta += "| Constantes\n";
+        
         //MATRIZ PRINCIPAL
-        boolean banderaEcuacionLarga = false;
         for(i=0; i<mat.length-2; i++){//recorre la matriz recibida
             for(int j=0; j<mat[0].length-1; j++){ //columna
-                matriz += mat[i][j].toString() + "\t";
-                if(auxExiteEcuacionLarga[j]==true){ //si hay M en la última ecuacion
-                    matriz += "\t";
+                matrizCompleta += mat[i][j].toString() + "\t";
+                if(auxExiteEcuacionLarga[j]==true){ //si hay ecuacion larga en esa columna
+                    matrizCompleta += "\t";
                 }
             }
-            matriz += "| " + mat[i][mat[0].length-1].toString() + "\n";
+            matrizCompleta += "| " + mat[i][mat[0].length-1].toString() + "\n";
         }
+        //1M-5000
         //última fila (de ecuación)
+        String auxS = "";
         for(int columna=0; columna < mat[0].length; columna++){
+            auxS = "";
             boolean banderaHayM = false;
             //Coeficiente
-            if(columna == mat[0].length-1) matriz += "| ";
+            if(columna == mat[0].length-1){
+                auxS += "| ";
+            }
             if(mat[mat.length-2][columna].getNumerador()!=0){
-                matriz += mat[mat.length-2][columna].toString() + "M";
+                auxS += mat[mat.length-2][columna].toString() + "M";
                 banderaHayM = true;
             }
-                if(banderaHayM == true && mat[mat.length-1][columna].getNumerador()>0) matriz += "+";
-                if(mat[mat.length-1][columna].getNumerador()!=0 || banderaHayM == false)matriz+= mat[mat.length-1][columna].toString(); 
-            matriz+= "\t";
+            //Independiente
+                if(banderaHayM == true && mat[mat.length-1][columna].getNumerador()>0){
+                    auxS += "+";
+                }
+                if(mat[mat.length-1][columna].getNumerador()!=0 || banderaHayM == false){
+                    auxS+= mat[mat.length-1][columna].toString();
+                } 
+             matrizCompleta+= auxS;   
+            matrizCompleta+= "\t";
+            //matrizCompleta+= "\n";
+            
         }
-        matriz+="\n";
-        return matriz;
+        matrizCompleta+="\n";
+        //matrizCompleta+=Arrays.toString(auxExiteEcuacionLarga);
+        return matrizCompleta;
+    }
+
+    private static boolean comprobarEcuacionLarga(Fraccion independiente, Fraccion coeficiente) {
+        // mat[mat.length-1][10].toString().length() + mat[mat.length-2][10].toString().length() + 2 -> >0 >0
+        // mat[mat.length-1][10].toString().length() + 1 -> >0 <=0
+        // mat[mat.length-2][10].toString().length() -> <=0 >0
+        
+        //Coeficiente: -1   Independiente: 5000
+        //matrizCompleta += "\nCoeficiente: " + coeficiente.toString() + " " + coeficiente.toString().length()  + "   Independiente: " + independiente.toString() + "  " + " " + independiente.toString().length() + " ";
+        if(coeficiente.getNumerador()!=0 && independiente.getNumerador()!=0){
+            //matrizCompleta+= "  Long: " +(coeficiente.toString().length() + independiente.toString().length() + 2);
+            if((coeficiente.toString().length() + independiente.toString().length())>=6){
+                //matrizCompleta+= "  Entro ";
+                return true;
+            }
+        }
+        if(coeficiente.getNumerador()!=0){
+            if((coeficiente.toString().length() +1)>=8) return true;
+        }
+        if(independiente.getNumerador()!=0){
+            if((independiente.toString().length())>=8) return true;
+        }
+        return false;
     }
 }

@@ -13,7 +13,7 @@ x + z >= 30.5
 Solución óptima: p = 71.5; x = 15.25, y = 5.25, z = 15.25
 Solución óptima: p = 143/2; x = 61/4, y = 21/4, z = 61/4
 
-Prueba 5 (Duda igual que en max, solo da 1.5 a x, los demás no):
+Prueba 5 (Funciona):
 minimizar p = x+y+z sujeto a 
 x+y+z>=1.5
 x+y+z>=.5

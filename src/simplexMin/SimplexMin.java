@@ -104,6 +104,7 @@ public class SimplexMin {
         //System.out.println("\nColumnaP: " + this.columnaPivote);
         
         //Razón de desplazamiento //CHECAR
+        //boolean filaEncontrada = false;
         int numColumnas = this.matrizFraccion[0].length;
         int fila=0; //recorre las filas de la columna pivoteFraccion
         while(this.matrizFraccion[fila][columnaPivote].getNumerador()<=0 && fila < filaCoeficientes){
@@ -115,15 +116,30 @@ public class SimplexMin {
             //System.out.println("Menor: " + menor + " Fila: " + fila); 
             this.filapivote=fila;
             for(int i=fila+1; i<filaCoeficientes; i++){//columna de constantes
-                Fraccion aux = this.matrizFraccion[i][numColumnas-1].dividir(this.matrizFraccion[i][columnaPivote]);
-                //System.out.println("Comparar: " + menor + " con " + aux);
-                
-                if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
-                    menor = aux;
-                    this.filapivote=i;
-                    //System.out.println("Nuevo menor: " + menor + "  fila: " + this.filapivote);
-                }
+                if(this.getMatrizFraccion()[i][columnaPivote].getNumerador()>0 && this.getMatrizFraccion()[i][numColumnas-1].getNumerador()>=0){
+                    //filaEncontrada=true;
+                    Fraccion aux = this.getMatrizFraccion()[i][numColumnas-1].dividir(this.getMatrizFraccion()[i][columnaPivote]);
+                     //if(menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                     if(menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                         menor = aux;
+                         this.filapivote=i;
+                     } 
+                 }
             }
+            /*if(filaEncontrada=false){ //No encontro fila pivote
+              for(int i=fila+1; i<filaCoeficientes; i++){//columna de constantes
+                    if(this.getMatrizFraccion()[i][columnaPivote].getNumerador()!=0){
+                        Fraccion aux1 = new Fraccion(Math.abs(this.getMatrizFraccion()[i][numColumnas-1].getNumerador()), this.getMatrizFraccion()[i][numColumnas-1].getDenominador());
+                        Fraccion aux2 = new Fraccion(Math.abs(this.getMatrizFraccion()[i][columnaPivote].getNumerador()), this.getMatrizFraccion()[i][columnaPivote].getDenominador());
+                        Fraccion aux = aux1.dividir(aux2);
+                         //if(menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                         if(menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                             menor = aux;
+                             this.filapivote=i;
+                         } 
+                     }
+                }  
+            }*/
             //System.out.println("FilaP: " + this.filapivote);
             actualizarPivoteFraccion();
             //System.out.println("\nPivote: " + this.pivoteFraccion);
@@ -200,7 +216,6 @@ public class SimplexMin {
         int columna = 0; //columna
         while(columna<this.matrizFraccion[0].length-1){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
-            //System.out.println("\n");
             for(int fila=0; fila<this.getMatrizFraccion().length-2; fila++){ //fila
                 //System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matrizFraccion[fila][columna]);
                 if(this.getMatrizFraccion()[fila][columna].getNumerador()==1 && this.getMatrizFraccion()[fila][columna].getDenominador()==1 &&encontrado==false && solucionFilaYaAsignado[fila]==false){
@@ -208,8 +223,9 @@ public class SimplexMin {
                     resultadoVariablesFraccion[columna]=this.getMatrizFraccion()[fila][this.getMatrizFraccion()[fila].length-1];
                     //System.out.println("Primer if");
                 }else if(encontrado == true || this.getMatrizFraccion()[fila][columna].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
-                    resultadoVariablesFraccion[columna] = new Fraccion(0, 1);
                     //System.out.println("Segundo if");
+                    resultadoVariablesFraccion[columna] = new Fraccion(0, 1);
+                    
                     break;
                 }
             }

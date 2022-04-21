@@ -47,6 +47,7 @@ public class Fraccion {
     }
 
     public void simplificar(){
+        if(getNumerador()==0) this.denominador=1;
       if(getDenominador()!=1 && getDenominador()!=0){
           int mcd = mcd();
         setNumerador(getNumerador() / mcd);  

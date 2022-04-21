@@ -54,9 +54,10 @@ public class SimplexMax {
         
         while(!verificarNegativos()){ //miestras sigan existiendo números negativos en la última fila
            solucion += "\nTabla" + i + ": \n"; i++;
+           
             buscarPivote();
-            filaPivoteivote();
-            columnaPivoteivote(); 
+            filaPivote();
+            columnaPivote(); 
         } 
         buscarSolucion(); //Z y valores de variables
     }
@@ -68,6 +69,7 @@ public class SimplexMax {
         solucion += Matriz.imprimirMatriz(matrizFraccion, this.variables, this.restricciones);
         while(!verificarNegativosFraccion()){ //miestras sigan existiendo números negativos en la última fila
             solucion += "\nTabla" + i + ": \n"; i++;
+            
             buscarPivoteFraccion();
             filaPivoteivoteFraccion();
             columnaPivoteivoteFraccion(); 
@@ -97,10 +99,13 @@ public class SimplexMax {
         float menor = (float)(this.getMatrizDecimal()[fila][columnas-1] / this.getMatrizDecimal()[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
         setFilaPivote(fila);
         for(int i=fila+1; i<filas-1; i++){//columna de constantes
-            float aux = (this.getMatrizDecimal()[i][columnas-1] / this.getMatrizDecimal()[i][columnaPivote]);
-            if(aux>0 && aux<menor){
-                menor = aux;
-                setFilaPivote(i);
+            //if(this.getMatrizDecimal()[i][columnaPivote]>0){
+            if(this.getMatrizDecimal()[i][columnaPivote]>0 && this.getMatrizDecimal()[i][columnas-1]>=0){
+                float aux = (this.getMatrizDecimal()[i][columnas-1] / this.getMatrizDecimal()[i][columnaPivote]);
+                if(aux<menor){
+                    menor = aux;
+                    setFilaPivote(i);
+                }
             }
         }
         actualizarPivote(); //elemento pivoteDecimal está en la posición [filaPivote][columaP]
@@ -130,16 +135,21 @@ public class SimplexMax {
         Fraccion menor = this.getMatrizFraccion()[fila][columnas-1].dividir(this.getMatrizFraccion()[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
         setFilaPivote(fila);
         for(int i=fila+1; i<numFilas-1; i++){//columna de constantes
-            Fraccion aux = this.getMatrizFraccion()[i][columnas-1].dividir(this.getMatrizFraccion()[i][columnaPivote]);
-            if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
-                menor = aux;
-                setFilaPivote(i);
+            if(this.getMatrizFraccion()[i][columnaPivote].getNumerador()>0 && this.getMatrizFraccion()[i][columnas-1].getNumerador()>=0){
+            //if(this.getMatrizFraccion()[i][columnaPivote].getNumerador()>0){
+               Fraccion aux = this.getMatrizFraccion()[i][columnas-1].dividir(this.getMatrizFraccion()[i][columnaPivote]);
+                if(menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                //if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
+                    menor = aux;
+                    setFilaPivote(i);
+                } 
             }
+            
         }
         actualizarPivoteFraccion(); //elemento pivoteDecimal está en la posición [filaPivote][columaP]
     }
     
-    private void filaPivoteivote(){//Hacer a fila pivoteDecimal 0, menos al elemento pivoteDecimal
+    private void filaPivote(){//Hacer a fila pivoteDecimal 0, menos al elemento pivoteDecimal
         //número que multiplicado por el pivoteDecimal de como resultado 1
         //O sea, el reciproco del pivoteDecimal
         float reciproco = (float) Math.pow(getPivoteDecimal(), -1.0);
@@ -161,16 +171,16 @@ public class SimplexMax {
         actualizarPivoteFraccion();
     }
     
-    private void columnaPivoteivote(){
-        for(int i=0; i<this.getMatrizDecimal().length; i++){ //recorre la columa pivoteDecimal
-          if(i!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
-            float elemento = this.getMatrizDecimal()[i][this.columnaPivote];
+    private void columnaPivote(){
+        for(int fila=0; fila<this.getMatrizDecimal().length; fila++){ //recorre la columa pivoteDecimal
+          if(fila!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
+            float elemento = this.getMatrizDecimal()[fila][this.columnaPivote];
             float x = (-1)*(elemento/this.getPivoteDecimal()); //buscar un numero que multiplicado por el pivoteDecimal 
               // y sumado al elemento de la columna pivoteDecimal de como resultado 0
 
             //El número encontrado (x) afecta a toda la fila
-            for(int j=0; j<this.getMatrizDecimal()[0].length; j++){ //recorre la fila que se ve afectada por x
-                this.matrizDecimal[i][j] += (x*this.getMatrizDecimal()[this.filaPivote][j]); //el número (x) se multiplica
+            for(int columna=0; columna<this.getMatrizDecimal()[0].length; columna++){ //recorre la fila que se ve afectada por x
+                this.matrizDecimal[fila][columna] += (x*this.getMatrizDecimal()[this.filaPivote][columna]); //el número (x) se multiplica
                 //por el elemento que esté en la fila pivoteDecimal, el la misma columa (j) del elemento afectado
             }
           }
@@ -179,23 +189,26 @@ public class SimplexMax {
     }
     
     private void columnaPivoteivoteFraccion(){
-        for(int i=0; i<this.getMatrizFraccion().length; i++){ //recorre la columa pivoteDecimal
-          if(i!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
-            Fraccion elemento = this.getMatrizFraccion()[i][this.columnaPivote];
+        for(int fila=0; fila<this.getMatrizFraccion().length; fila++){ //recorre la columa pivoteDecimal
+            
+          if(fila!=this.filaPivote){ //para que no aplique esto a la fila pivoteDecimal
+            Fraccion elemento = this.getMatrizFraccion()[fila][this.columnaPivote];
             Fraccion x = elemento.dividirNegativo(getPivoteFraccion()); //al dividir, multiplica por -1 el nominador
             //float x = (-1)*(elemento/this.pivoteDecimal); //buscar un numero que multiplicado por el pivoteDecimal 
               // y sumado al elemento de la columna pivoteDecimal de como resultado 0
 
             //El número encontrado (x) afecta a toda la fila
-            for(int j=0; j<this.getMatrizFraccion()[0].length; j++){ //recorre la fila que se ve afectada por x
+            for(int columna=0; columna<this.getMatrizFraccion()[0].length; columna++){ //recorre la fila que se ve afectada por x
                 //this.matriz[i][j] += (x*this.matriz[this.filaPivote][j]); //el número (x) se multiplica
-                this.matrizFraccion[i][j] =  this.getMatrizFraccion()[i][j].suma(this.getMatrizFraccion()[this.filaPivote][j].multiplicar(x));//el número (x) se multiplica
+                
+                Fraccion auxMultiplicacion = this.getMatrizFraccion()[this.filaPivote][columna].multiplicar(x);
+                Fraccion aux = this.getMatrizFraccion()[fila][columna].suma(auxMultiplicacion);
+                this.matrizFraccion[fila][columna] =  aux;//el número (x) se multiplica
                 //por el elemento que esté en la fila pivoteDecimal, el la misma columa (j) del elemento afectado
             }
           }
         }
         solucion += Matriz.imprimirMatriz(getMatrizFraccion(), this.variables, this.restricciones);
-    
     }
     
     private boolean verificarNegativos(){
