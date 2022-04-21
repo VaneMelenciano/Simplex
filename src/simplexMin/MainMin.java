@@ -66,8 +66,8 @@ public class MainMin {
         
         Ecuacion e9 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};*/
-        int variables = 2;
-        int restricciones = 3;
+        int variables = 3;
+        int restricciones = 2;
         
         Matriz.matriz = Matriz.leerArchivo();
         //System.out.println("\n ORIGINAL");

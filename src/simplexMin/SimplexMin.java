@@ -196,13 +196,15 @@ public class SimplexMin {
      private void buscarSolucionFraccion() { //funcion para buscar la solucion con fraccion de las variables
         resultadoFraccion = this.getMatrizFraccion()[this.getMatrizFraccion().length-1][this.getMatrizFraccion()[0].length-1];
         resultadoVariablesFraccion = new Fraccion[this.variables+(this.restricciones*2)];
+        boolean solucionFilaYaAsignado[] = new boolean[this.matrizFraccion.length-1];
         int columna = 0; //columna
         while(columna<this.matrizFraccion[0].length-1){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
             //System.out.println("\n");
             for(int fila=0; fila<this.getMatrizFraccion().length-2; fila++){ //fila
                 //System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matrizFraccion[fila][columna]);
-                if(this.getMatrizFraccion()[fila][columna].getNumerador()==1 && this.getMatrizFraccion()[fila][columna].getDenominador()==1 &&encontrado==false){
+                if(this.getMatrizFraccion()[fila][columna].getNumerador()==1 && this.getMatrizFraccion()[fila][columna].getDenominador()==1 &&encontrado==false && solucionFilaYaAsignado[fila]==false){
+                    solucionFilaYaAsignado[fila] = true;
                     resultadoVariablesFraccion[columna]=this.getMatrizFraccion()[fila][this.getMatrizFraccion()[fila].length-1];
                     //System.out.println("Primer if");
                 }else if(encontrado == true || this.getMatrizFraccion()[fila][columna].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1

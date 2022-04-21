@@ -229,13 +229,16 @@ public class SimplexMax {
     private void buscarSolucionFraccion() { //funcion para buscar la solucion con fraccion de las variables
         resultadoFraccion = this.getMatrizFraccion()[this.getMatrizFraccion().length-1][this.getMatrizFraccion()[0].length-1];
         resultadoVariablesFraccion = new Fraccion[this.variables+this.restricciones];
+            //Para que solo se pueda dar una vez el valor de esa fila a una variable
+        boolean solucionFilaYaAsignado[] = new boolean[this.matrizFraccion.length-1];
         int t = 0; //columna
         while(t<(this.variables+this.restricciones)){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
-            for(int i=0; i<this.getMatrizFraccion().length-1; i++){ //fila
-                if(this.getMatrizFraccion()[i][t].getNumerador()==1 && this.getMatrizFraccion()[i][t].getDenominador()==1 &&encontrado==false){
-                    resultadoVariablesFraccion[t]=this.getMatrizFraccion()[i][this.getMatrizFraccion()[i].length-1];
-                }else if(encontrado == true || this.getMatrizFraccion()[i][t].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
+            for(int fila=0; fila<this.getMatrizFraccion().length-1; fila++){ //fila
+                if(this.getMatrizFraccion()[fila][t].getNumerador()==1 && this.getMatrizFraccion()[fila][t].getDenominador()==1 && encontrado==false && solucionFilaYaAsignado[fila]==false){
+                    solucionFilaYaAsignado[fila] = true;
+                    resultadoVariablesFraccion[t]=this.getMatrizFraccion()[fila][this.getMatrizFraccion()[fila].length-1];
+                }else if(encontrado == true || this.getMatrizFraccion()[fila][t].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
                     resultadoVariablesFraccion[t] = new Fraccion(0, 1);
                     break;
                 }
@@ -249,13 +252,16 @@ public class SimplexMax {
     private void buscarSolucion() { //funcion para buscar la solucion con fraccion de las variables
         resultadoDecimal = this.getMatrizDecimal()[this.getMatrizDecimal().length-1][this.getMatrizDecimal()[0].length-1];
         resultadoVariablesDecimal = new float[this.variables+this.restricciones];
+        //Para que solo se pueda dar una vez el valor de esa fila a una variable
+        boolean solucionFilaYaAsignado[] = new boolean[this.matrizDecimal.length-1];
         int t = 0; //columna
         while(t<(this.variables+this.restricciones)){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
-            for(int i=0; i<this.getMatrizDecimal().length-1; i++){ //fila
-                if(this.getMatrizDecimal()[i][t]==1 && encontrado==false){
-                    resultadoVariablesDecimal[t]=this.getMatrizDecimal()[i][this.getMatrizDecimal()[i].length-1];
-                }else if(encontrado == true || this.getMatrizDecimal()[i][t]!=0){ //ya existe un 1 0 existen numeros dif a 1
+            for(int fila=0; fila<this.getMatrizDecimal().length-1; fila++){ //fila
+                if(this.getMatrizDecimal()[fila][t]==1 && encontrado==false && solucionFilaYaAsignado[fila]==false){
+                    solucionFilaYaAsignado[fila] = true;
+                    resultadoVariablesDecimal[t]=this.getMatrizDecimal()[fila][this.getMatrizDecimal()[fila].length-1];
+                }else if(encontrado == true || this.getMatrizDecimal()[fila][t]!=0){ //ya existe un 1 0 existen numeros dif a 1
                     resultadoVariablesDecimal[t] = 0;
                     break;
                 }
