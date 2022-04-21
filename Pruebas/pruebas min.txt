@@ -5,7 +5,7 @@ x + y + z + w >= 40
 w - y >= 12
 Solución óptima: p = 62; w = 12, x = 28, y = 0, z = 0
 
-Prueba 4:
+Prueba 4 (Funciona):
 minimizar p = x + 2y + 3z sujeto a
 x + y >= 20.5
 y + z >= 20.5
@@ -13,26 +13,26 @@ x + z >= 30.5
 Solución óptima: p = 71.5; x = 15.25, y = 5.25, z = 15.25
 Solución óptima: p = 143/2; x = 61/4, y = 21/4, z = 61/4
 
-Prueba 5:
+Prueba 5 (Duda igual que en max, solo da 1.5 a x, los demás no):
 minimizar p = x+y+z sujeto a 
 x+y+z>=1.5
 x+y+z>=.5
 Solución óptima: p = 1.5; x = 1.5, y = 0, z = 0
 
-Prueba 6:
+Prueba 6(Funciona):
 minimizar p = 3x+2y sujeto a 
 2x+y>=18
 2x+3y>=42
 3x+y>=24
 Solución óptima: p = 246/7; x = 30/7, y = 78/7
 
-Prueba 7:
+Prueba 7 (Funciona):
 minimizar p = 50x + 40y sujeto a 
 2x+3y>=1500
 2x+y>=1000
 Solución óptima: p = 28750; x = 375, y = 250
 
-Prueba 8:
+Prueba 8 (NO FUNCIONA):
 minimizar p = 20000x1 + 20000x2 + 20000x3 + 20000x4 sujeto a 
 2x1 + x2 + x3 + 2x4 >= 24
 2x1 +2x2 + x3 >= 20
@@ -40,7 +40,7 @@ minimizar p = 20000x1 + 20000x2 + 20000x3 + 20000x4 sujeto a
 4x4 >= 16
 Solución óptima: p = 340000; x1 = 3, x2 = 4, x3 = 6, x4 = 4
 
-Prueba 9 :
+Prueba 9 (FUNCIONA):
 minimizar p = 3x + 2y sujeto a 
 2x+3y>=42
 3x+1y>=24

@@ -258,17 +258,18 @@ public class Matriz {
         }
             //última fila (de ecuación)
         for(int columna=0; columna < mat[0].length; columna++){
-            boolean bandera = false;
+            boolean banderaHayM = false;
             //Coeficiente
             if(columna == mat[0].length-1) matriz += "| ";
             if(mat[mat.length-2][columna]!=0){
                 matriz += String.format("%3.3f", mat[mat.length-2][columna]) + "M";
-                bandera = true;
+                banderaHayM = true;
             }
-                if(bandera == true && mat[mat.length-1][columna]!=0) matriz += "+";
-                if(mat[mat.length-1][columna]!=0 || bandera == false)matriz+= mat[mat.length-1][columna]; 
+                if(banderaHayM == true && mat[mat.length-1][columna]>0) matriz += "+";
+                if(mat[mat.length-1][columna]!=0 || banderaHayM == false)matriz+= mat[mat.length-1][columna]; 
             matriz+= "\t";
         }
+        matriz+="\n";
         return matriz;
     } 
     public static String imprimirMatrizMinimizacion(Fraccion[][] mat, int var, int res) {
@@ -294,17 +295,18 @@ public class Matriz {
         }
         //última fila (de ecuación)
         for(int columna=0; columna < mat[0].length; columna++){
-            boolean bandera = false;
+            boolean banderaHayM = false;
             //Coeficiente
             if(columna == mat[0].length-1) matriz += "| ";
             if(mat[mat.length-2][columna].getNumerador()!=0){
                 matriz += mat[mat.length-2][columna].toString() + "M";
-                bandera = true;
+                banderaHayM = true;
             }
-                if(bandera == true && mat[mat.length-1][columna].getNumerador()!=0) matriz += "+";
-                if(mat[mat.length-1][columna].getNumerador()!=0 || bandera == false)matriz+= mat[mat.length-1][columna].toString(); 
+                if(banderaHayM == true && mat[mat.length-1][columna].getNumerador()>0) matriz += "+";
+                if(mat[mat.length-1][columna].getNumerador()!=0 || banderaHayM == false)matriz+= mat[mat.length-1][columna].toString(); 
             matriz+= "\t";
         }
+        matriz+="\n";
         return matriz;
     }
 }

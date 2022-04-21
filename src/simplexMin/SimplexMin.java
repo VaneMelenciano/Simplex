@@ -44,15 +44,29 @@ public class SimplexMin {
     }
 
     private void procesoFraccion() {
+        int i=1;
+        solucion += "Tabla" + i + ": \n"; i++;
+        solucion += Matriz.imprimirMatrizMinimizacion(this.matrizFraccion, this.variables, this.restricciones);
+        
         multiplicarMFraccion(); 
+        //Después de multiplicar por M
+        solucion += "\nTabla" + i + ": \n"; i++;
+        solucion += Matriz.imprimirMatrizMinimizacion(this.matrizFraccion, this.variables, this.restricciones);
+        
         buscarPivoteFraccion();
         filaPivoteFraccion();
         columnaPivoteivoteFraccion();
+        //Primera iteración
+        solucion += "\nTabla" + i + ": \n"; i++;
+        solucion += Matriz.imprimirMatrizMinimizacion(this.matrizFraccion, this.variables, this.restricciones);
+        
         while(!verificarMFraccion()){ //miestras sigan existiendo M última fila, donde están las constantes
+            solucion += "\nTabla" + i + ": \n"; i++;
             //Mientras la fila de coeficientes en la última columna, no tenga 0
             buscarPivoteFraccion();
             filaPivoteFraccion();
             columnaPivoteivoteFraccion();
+            solucion += Matriz.imprimirMatrizMinimizacion(this.matrizFraccion, this.variables, this.restricciones);
         }
         buscarSolucionFraccion();
     }
@@ -65,7 +79,7 @@ public class SimplexMin {
                 } 
                this.matrizFraccion[this.matrizFraccion.length-2][columna] = resultado;//fila de las constantes
                
-        }System.out.println(Matriz.imprimirMatriz(matrizFraccion, this.variables, this.restricciones));System.out.println();
+        }//System.out.println(Matriz.imprimirMatriz(matrizFraccion, this.variables, this.restricciones));System.out.println();
         
     }
     
@@ -75,18 +89,18 @@ public class SimplexMin {
         int filaCoeficientes = this.matrizFraccion.length-2;
         int columna=0;
         Fraccion mayor = new Fraccion(this.matrizFraccion[filaCoeficientes][0].getNumerador(), this.matrizFraccion[filaCoeficientes][0].getDenominador());
-        System.out.println("Mayor: " + mayor);
+        //System.out.println("Mayor: " + mayor);
         this.columnaPivote=columna; //posición del valor absoluto, columna pivoteFraccion
         for(int i=1; i<this.variables+this.restricciones; i++){ //recorre las columnas solo en la fila de coeficientes
             Fraccion aux = new Fraccion(this.matrizFraccion[filaCoeficientes][i].getNumerador(), this.matrizFraccion[filaCoeficientes][i].getDenominador());
-            System.out.println("Aux: " + aux);
+            //System.out.println("Aux: " + aux);
             if(aux.compararMayor(mayor)){ //Math.abs(this.matrizFraccion[ultima][j])>mayor
                 mayor = aux;
-                System.out.println("Mayor nuevo: " + mayor);
+                //System.out.println("Mayor nuevo: " + mayor);
                 this.columnaPivote=i;
             }
         }
-        System.out.println("\nColumnaP: " + this.columnaPivote);
+        //System.out.println("\nColumnaP: " + this.columnaPivote);
         
         //Razón de desplazamiento //CHECAR
         int numColumnas = this.matrizFraccion[0].length;
@@ -97,21 +111,21 @@ public class SimplexMin {
         
            Fraccion menor = this.matrizFraccion[fila][numColumnas-1].dividir(this.matrizFraccion[fila][columnaPivote]); //buscar la razón de desplazamineto (menor)
             
-            System.out.println("Menor: " + menor + " Fila: " + fila); 
+            //System.out.println("Menor: " + menor + " Fila: " + fila); 
             this.filapivote=fila;
             for(int i=fila+1; i<filaCoeficientes; i++){//columna de constantes
                 Fraccion aux = this.matrizFraccion[i][numColumnas-1].dividir(this.matrizFraccion[i][columnaPivote]);
-                System.out.println("Comparar: " + menor + " con " + aux);
+                //System.out.println("Comparar: " + menor + " con " + aux);
                 
                 if(aux.getNumerador()>0 && aux.getDenominador()>0 && menor.compararMayor(aux)){ //>0 para que solo eliga positivos//aux < menor -> menor > aux
                     menor = aux;
                     this.filapivote=i;
-                    System.out.println("Nuevo menor: " + menor + "  fila: " + this.filapivote);
+                    //System.out.println("Nuevo menor: " + menor + "  fila: " + this.filapivote);
                 }
             }
-            System.out.println("FilaP: " + this.filapivote);
+            //System.out.println("FilaP: " + this.filapivote);
             actualizarPivoteFraccion();
-            System.out.println("\nPivote: " + this.pivoteFraccion);
+            //System.out.println("\nPivote: " + this.pivoteFraccion);
             //elemento pivoteFraccion está en la posición [filapivote][columaP] 
     }
     
@@ -125,8 +139,8 @@ public class SimplexMin {
             this.matrizFraccion[this.filapivote][columna]= this.matrizFraccion[this.filapivote][columna].multiplicar(reciproco);
         }
         actualizarPivoteFraccion();
-        System.out.println("\nFila pivote : " + this.filapivote);
-        System.out.println(Matriz.imprimirMatriz(this.matrizFraccion, this.variables, this.restricciones));
+        //System.out.println("\nFila pivote : " + this.filapivote);
+        //System.out.println(Matriz.imprimirMatriz(this.matrizFraccion, this.variables, this.restricciones));
     }
     
     private void columnaPivoteivoteFraccion(){ //hace a toda la columna pivoteFraccion 0, menos al pivoteFraccion
@@ -155,7 +169,7 @@ public class SimplexMin {
         Fraccion x1 = elementoCoeficiente.dividirNegativo(this.pivoteFraccion);
         Fraccion x2 = elementoIndependiente.dividirNegativo(this.pivoteFraccion);
         //Ecuacion x = new Ecuacion(x1, x2);
-        System.out.println("\nX: " + x1 + "  " + x2);
+        //System.out.println("\nX: " + x1 + "  " + x2);
          //El número encontrado (x) afecta a toda la fila (ultima fila en este caso)
             for(int columna=0; columna<this.matrizFraccion[0].length; columna++){ 
                 /*x*P + E*/
@@ -165,8 +179,8 @@ public class SimplexMin {
                 this.matrizFraccion[this.matrizFraccion.length-1][columna] = this.matrizFraccion[this.matrizFraccion.length-1][columna].suma(x2.multiplicar(this.matrizFraccion[this.filapivote][columna]));
                 //por el elemento que esté en la fila pivoteFraccion, el la misma columa (j) del elemento afectado
             }
-        System.out.println("\nColumna pivote: " + this.columnaPivote);
-        System.out.println(Matriz.imprimirMatriz(getMatrizFraccion(), this.variables, this.restricciones));
+        //System.out.println("\nColumna pivote: " + this.columnaPivote);
+        //System.out.println(Matriz.imprimirMatriz(getMatrizFraccion(), this.variables, this.restricciones));
     }
     
     private void actualizarPivoteFraccion() {
@@ -184,15 +198,15 @@ public class SimplexMin {
         int columna = 0; //columna
         while(columna<this.matrizFraccion[0].length-1){
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
-            System.out.println("\n");
+            //System.out.println("\n");
             for(int fila=0; fila<this.getMatrizFraccion().length-2; fila++){ //fila
-                System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matrizFraccion[fila][columna]);
+                //System.out.println("Pos: " + fila + ", " + columna + "    Elemento: " + this.matrizFraccion[fila][columna]);
                 if(this.getMatrizFraccion()[fila][columna].getNumerador()==1 && this.getMatrizFraccion()[fila][columna].getDenominador()==1 &&encontrado==false){
                     resultadoVariablesFraccion[columna]=this.getMatrizFraccion()[fila][this.getMatrizFraccion()[fila].length-1];
-                    System.out.println("Primer if");
+                    //System.out.println("Primer if");
                 }else if(encontrado == true || this.getMatrizFraccion()[fila][columna].getNumerador()!=0){ //ya existe un 1 0 existen numeros dif a 1
                     resultadoVariablesFraccion[columna] = new Fraccion(0, 1);
-                    System.out.println("Segundo if");
+                    //System.out.println("Segundo if");
                     break;
                 }
             }
