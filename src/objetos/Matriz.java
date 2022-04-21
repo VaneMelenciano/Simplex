@@ -14,6 +14,7 @@ import java.io.IOException;
 import static java.lang.String.valueOf;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Random;
@@ -274,22 +275,39 @@ public class Matriz {
     } 
     public static String imprimirMatrizMinimizacion(Fraccion[][] mat, int var, int res) {
         String matriz  = "";
+        boolean auxExiteEcuacionLarga[] = new boolean[mat[0].length-1];
         //PRIMERA FILA
-        int i;
+        int i, columnaAux = 0;
         for(i=1; i<=var; i++){
             matriz += "x" + i + "\t";
+                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
+                    matriz += "\t";
+                    auxExiteEcuacionLarga[columnaAux] = true;
+                } columnaAux++;
         }
         for(i=1; i<=res; i++){
             matriz += "S" + i + "\t";
+                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
+                    matriz += "\t";
+                    auxExiteEcuacionLarga[columnaAux] = true;
+                } columnaAux++;
         }
         for(i=1; i<=res; i++){
             matriz += "A" + i + "\t";
+                if(mat[mat.length-1][columnaAux].getNumerador()!=0 && mat[mat.length-2][columnaAux].getNumerador()!=0 && (mat[mat.length-1][columnaAux].getDenominador()!=1 && mat[mat.length-2][columnaAux].getDenominador()!=1)){ //si hay M en la última ecuacion
+                    matriz += "\t";
+                    auxExiteEcuacionLarga[columnaAux] = true;
+                } columnaAux++;
         }
         matriz += "| Constantes\n";
         //MATRIZ PRINCIPAL
+        boolean banderaEcuacionLarga = false;
         for(i=0; i<mat.length-2; i++){//recorre la matriz recibida
-            for(int j=0; j<mat[0].length-1; j++){
+            for(int j=0; j<mat[0].length-1; j++){ //columna
                 matriz += mat[i][j].toString() + "\t";
+                if(auxExiteEcuacionLarga[j]==true){ //si hay M en la última ecuacion
+                    matriz += "\t";
+                }
             }
             matriz += "| " + mat[i][mat[0].length-1].toString() + "\n";
         }
