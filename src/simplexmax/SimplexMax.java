@@ -28,6 +28,7 @@ public class SimplexMax {
     private float[] resultadoVariablesDecimal; //solucion de variables en decimal
     //Todas las funciones que tengan una F al final, son las que trabajan con la matriz en fracciones
     private String solucion="";
+    private String solucionOptima="";
     
     public SimplexMax(int variables, int restricciones, float[][] matrizDecimal){
         this.restricciones=restricciones;
@@ -266,28 +267,40 @@ public class SimplexMax {
     
     private void imprimirSolucionFraccion(){
         solucion += "\nSolución óptima:  ";
+        solucionOptima += "\nSolución óptima:  ";
         solucion += "Z: " + this.resultadoFraccion + ", "; //Z
+        solucionOptima += "Z: " + this.resultadoFraccion + ", "; //Z
         //variables
         for(int i=0; i<this.variables-1; i++){
             solucion += "x" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
+            solucionOptima += "x" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
         }solucion += "x" + this.variables + ": " + this.resultadoVariablesFraccion[this.variables-1] + ", ";
+        solucionOptima += "x" + this.variables + ": " + this.resultadoVariablesFraccion[this.variables-1] + ", ";
         //variables flojas - restricciones
         for(int i=0, j=this.variables; i<this.restricciones-1 && j<(this.restricciones+this.variables-1); i++, j++){
             solucion += "s" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
+            solucionOptima += "s" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
         }solucion += "s" + this.restricciones + ": " + this.resultadoVariablesFraccion[this.resultadoVariablesFraccion.length-1] + "\n";
+        solucionOptima += "s" + this.restricciones + ": " + this.resultadoVariablesFraccion[this.resultadoVariablesFraccion.length-1] + "\n";
     }
     
     private void imprimirSolucion(){
         solucion += "\nSolución óptima:  ";
+        solucionOptima += "\nSolución óptima:  ";
         solucion += "Z: " + String.format("%3.3f", this.resultadoDecimal) + ", "; //Z
+        solucionOptima += "Z: " + String.format("%3.3f", this.resultadoDecimal) + ", "; //Z
         //variables
         for(int i=0; i<this.variables-1; i++){
             solucion += "x" + (i+1) + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[i]) + ", ";
+            solucionOptima += "x" + (i+1) + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[i]) + ", ";
         }solucion += "x" + this.variables + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[this.variables-1]) + ", ";
+        solucionOptima += "x" + this.variables + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[this.variables-1]) + ", ";
         //variables flojas - restricciones
         for(int i=0, j=this.variables; i<this.restricciones-1 && j<(this.restricciones+this.variables-1); i++, j++){
             solucion += "s" + (i+1) + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[j]) + ", ";
+            solucionOptima += "s" + (i+1) + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[j]) + ", ";
         }solucion += "s" + this.restricciones + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[this.resultadoVariablesDecimal.length-1]) + "\n";
+        solucionOptima += "s" + this.restricciones + ": " + String.format("%3.3f", this.resultadoVariablesDecimal[this.resultadoVariablesDecimal.length-1]) + "\n";
     }
     
     
@@ -381,5 +394,8 @@ public class SimplexMax {
     public String getSolucion() {
         return solucion;
     }
-    
+
+    public String getSolucionOptima() {
+            return solucionOptima;
+        }    
 }

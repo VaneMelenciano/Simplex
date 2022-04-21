@@ -33,18 +33,22 @@ public class Simplex {
         this.variables = variables;
         this.matrizFraccion = m;
     }*/
+    private static String solucionOptima;
     public static String simplex(TipoSimplex tipoSimplex, TipoNumero tipoNumero, int variables, int restricciones, Fraccion[][] matrizFraccion){
         String solucion = "";
         if(tipoSimplex.equals(TipoSimplex.Maximizacion) && tipoNumero.equals(tipoNumero.Fraccion)){ //maximizacion con fraccion
             SimplexMax sm = new SimplexMax(variables, restricciones, matrizFraccion);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else if(tipoSimplex.equals(TipoSimplex.Maximizacion)){ //maximizacion con decimal
             float[][] matriz = Fraccion.convertirMatriz(matrizFraccion);
             SimplexMax sm = new SimplexMax(variables, restricciones, matriz);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else if(tipoSimplex.equals(TipoSimplex.Minimizacion) && tipoNumero.equals(tipoNumero.Fraccion)){ //Minimizacion con fraccion
             SimplexMin sm = new SimplexMin(variables, restricciones, matrizFraccion);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else{//minimizacion con decimal
             
         }
@@ -56,16 +60,27 @@ public class Simplex {
             Fraccion[][] mF = Fraccion.convertirMatriz(matrizDecimal);
             SimplexMax sm = new SimplexMax(variables, restricciones, mF);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else if(tipoSimplex.equals(TipoSimplex.Maximizacion)){ //maximizacion con decimal
             SimplexMax sm = new SimplexMax(variables, restricciones, matrizDecimal);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else if(tipoSimplex.equals(TipoSimplex.Minimizacion) && tipoNumero.equals(tipoNumero.Fraccion)){ //Minimizacion con fraccion
             Fraccion[][] mF = Fraccion.convertirMatriz(matrizDecimal);
             SimplexMin sm = new SimplexMin(variables, restricciones, mF);
             solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }else{//minimizacion con decimal
             
         }
         return solucion;
     }
+
+    /**
+     * @return the solucionOptima
+     */
+    public static String getSolucionOptima() {
+        return solucionOptima;
+    }
+    
 }

@@ -35,6 +35,7 @@ public class SimplexMin {
     private Fraccion[] resultadoVariablesFraccion; //solucion x con fraccion
     private float[] resultadoVariablesDecimal; //solucion x con fraccion
     private String solucion="";
+    private String solucionOptima="";
     //Todas las funciones que tengan una F al final, son las que trabajan con la matrizFraccion de funciones
     public SimplexMin(int variables, int restricciones, Fraccion[][] matriz){
         this.restricciones=restricciones;
@@ -218,20 +219,26 @@ public class SimplexMin {
     private void imprimirSolucionFraccion(){
         solucion += "\nSolución óptima:  ";
         solucion += "Z: " + this.resultadoFraccion + ", "; //Z
+        solucionOptima += "\nSolución óptima:  ";
+        solucionOptima += "Z: " + this.resultadoFraccion + ", "; //Z
         //variables
         int i, j;
         for(i=0; i<this.variables; i++){
             solucion += "X" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
+            solucionOptima += "X" + (i+1) + ": " + this.resultadoVariablesFraccion[i] + ", ";
         }
         //variables flojas - restricciones
         for(i=0, j=this.variables; i<this.restricciones && j<(this.restricciones+this.variables); i++, j++){
             solucion += "S" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
+            solucionOptima += "S" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
             
         }
         //variables artificiales
         for(i=0, j=this.restricciones+this.variables; i<this.restricciones-1 && j<(this.matrizFraccion[0].length-1); i++, j++){
             solucion += "A" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
+            solucionOptima += "A" + (i+1) + ": " + this.resultadoVariablesFraccion[j] + ", ";
         }solucion += "A" + this.restricciones + ": " + this.resultadoVariablesFraccion[this.resultadoVariablesFraccion.length-1] + "\n";
+        solucionOptima += "A" + this.restricciones + ": " + this.resultadoVariablesFraccion[this.resultadoVariablesFraccion.length-1] + "\n";
     }
     
     public void imprimirSolucionF(){
@@ -249,5 +256,8 @@ public class SimplexMin {
     }
     public String getSolucion(){
         return this.solucion;
-    }   
+    }
+    public String getSolucionOptima(){
+        return this.solucionOptima;
+    }
 }
