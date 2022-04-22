@@ -32,6 +32,26 @@ public class Matriz {
     public static int restricciones;
     public static int variables;
     
+    public static Fraccion[][] convertirMatriz(int[][] matrizOriginal){
+        Fraccion[][] matriz = new Fraccion[matrizOriginal.length/2][matrizOriginal[0].length];
+        for(int fila=0, filaOriginal=0; fila<matrizOriginal.length/2 && filaOriginal<matrizOriginal.length; fila++, filaOriginal+=2){
+            for(int columna =0; columna<matrizOriginal[0].length; columna++){
+                matriz[fila][columna] = new Fraccion(matrizOriginal[filaOriginal][columna], matrizOriginal[filaOriginal+1][columna]);
+            }
+        }
+        return matriz;
+    }
+    
+    public static Fraccion[][] convertirMatriz(float[][] matrizOriginal){
+        Fraccion[][] matriz = new Fraccion[matrizOriginal.length/2][matrizOriginal[0].length];
+        for(int fila=0, filaOriginal=0; fila<matrizOriginal.length/2 && filaOriginal<matrizOriginal.length; fila++, filaOriginal+=2){
+            for(int columna =0; columna<matrizOriginal[0].length; columna++){
+                matriz[fila][columna] = new Fraccion((int)matrizOriginal[filaOriginal][columna], (int)matrizOriginal[filaOriginal+1][columna]);
+            }
+        }
+        return matriz;
+    }
+    
     public static float[][] leerArchivo(){
         String aux, texto;
         float matriz[][] = null;
@@ -369,4 +389,5 @@ public class Matriz {
         }
         return false;
     }
+    
 }

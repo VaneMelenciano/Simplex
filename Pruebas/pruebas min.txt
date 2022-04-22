@@ -32,7 +32,7 @@ minimizar p = 50x + 40y sujeto a
 2x+y>=1000
 Solución óptima: p = 28750; x = 375, y = 250
 
-Prueba 8 (NO FUNCIONA):
+Prueba 8 (FUNCIONA):
 minimizar p = 20000x1 + 20000x2 + 20000x3 + 20000x4 sujeto a 
 2x1 + x2 + x3 + 2x4 >= 24
 2x1 +2x2 + x3 >= 20
@@ -45,4 +45,14 @@ minimizar p = 3x + 2y sujeto a
 2x+3y>=42
 3x+1y>=24
 Solución óptima: p = 246/7; x = 30/7, y = 78/7
+
+Prueba 10 (No sale):
+minimizar z = 900x1 + 1400x2 + 700x3 + 1000x4 + 1700x5 + 900x6 sujeto a
+x1 + x2 + x3 >= 10
+x4 + x5 + x6 >= 10
+x1 + x4 >= 6
+x2 + x5 >= 4
+x3 + x6 >= 4
+x4 - x6 >= 0
+Solución óptima: z = 19400; x1 = 0, x2 = 4, x3 = 6, x4 = 6, x5 = 0, x6 = 4
 
