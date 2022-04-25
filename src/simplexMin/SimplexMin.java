@@ -237,7 +237,6 @@ public class SimplexMin {
     private void imprimirSolucionFraccion(){
         solucion += "\nSolución óptima:  ";
         solucion += "Z: " + this.resultadoFraccion + ", "; //Z
-        solucionOptima += "\nSolución óptima:  ";
         solucionOptima += "Z: " + this.resultadoFraccion + ", "; //Z
         //variables
         int i, j;

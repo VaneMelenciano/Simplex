@@ -123,24 +123,6 @@ public class Fraccion {
 
         return Float.valueOf(String.format("%3.3f", aux));
     }
-    public static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
-        Fraccion[][] aux = new Fraccion[matriz.length][matriz[0].length];
-        for(int i=0; i<matriz.length; i++){
-            for(int j=0; j<matriz[0].length; j++){
-                aux[i][j] = convertir(matriz[i][j]);
-            }
-        }
-        return aux;
-    }
-    public static float[][] convertirMatriz(Fraccion[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
-        float[][] aux = new float[matriz.length][matriz[0].length];
-        for(int i=0; i<matriz.length; i++){
-            for(int j=0; j<matriz[0].length; j++){
-                aux[i][j] = convertir(matriz[i][j]);
-            }
-        }
-        return aux;
-    }
     public boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
         /*if(this.numerador<0 && f.numerador<0) return ((numerador*f.getDenominador())<(f.getNumerador()*this.denominador));
         else if(this.numerador<0 && f.numerador>0) return true;

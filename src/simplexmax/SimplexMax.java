@@ -286,7 +286,6 @@ public class SimplexMax {
     
     private void imprimirSolucionFraccion(){
         solucion += "\nSolución óptima:  ";
-        solucionOptima += "\nSolución óptima:  ";
         solucion += "Z: " + this.resultadoFraccion + ", "; //Z
         solucionOptima += "Z: " + this.resultadoFraccion + ", "; //Z
         //variables
@@ -305,7 +304,6 @@ public class SimplexMax {
     
     private void imprimirSolucion(){
         solucion += "\nSolución óptima:  ";
-        solucionOptima += "\nSolución óptima:  ";
         solucion += "Z: " + String.format("%3.3f", this.resultadoDecimal) + ", "; //Z
         solucionOptima += "Z: " + String.format("%3.3f", this.resultadoDecimal) + ", "; //Z
         //variables

@@ -71,13 +71,13 @@ public class MainMin {
         //int variables = 3, restricciones = 3; //Prueba 4
         //int variables = 3, restricciones = 2; //Prueba 5
         //int variables = 2, restricciones = 3; //Prueba 6
-        //int variables = 2, restricciones = 2; //Prueba 7 y 9
+        //int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
         //int variables = 4, restricciones = 4; //Prueba 8
         //int variables = 6, restricciones = 6; //Prueba 10 NO SALE
         
         Matriz.matriz = Matriz.leerArchivo();
         //System.out.println("\n ORIGINAL");
-        Fraccion[][] nueva = Fraccion.convertirMatriz(Matriz.matriz);
+        Fraccion[][] nueva = Matriz.convertirMatriz(Matriz.matriz);
          System.out.println(Matriz.imprimirMatrizMinimizacion(nueva, variables, restricciones) + "\n");
         
         

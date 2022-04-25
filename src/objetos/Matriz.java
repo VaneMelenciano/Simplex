@@ -21,6 +21,7 @@ import java.util.Random;
 import java.util.StringTokenizer;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import static objetos.Fraccion.convertir;
 
 /**
  *
@@ -32,24 +33,33 @@ public class Matriz {
     public static int restricciones;
     public static int variables;
     
-    public static Fraccion[][] convertirMatriz(int[][] matrizOriginal){
-        Fraccion[][] matriz = new Fraccion[matrizOriginal.length/2][matrizOriginal[0].length];
-        for(int fila=0, filaOriginal=0; fila<matrizOriginal.length/2 && filaOriginal<matrizOriginal.length; fila++, filaOriginal+=2){
-            for(int columna =0; columna<matrizOriginal[0].length; columna++){
-                matriz[fila][columna] = new Fraccion(matrizOriginal[filaOriginal][columna], matrizOriginal[filaOriginal+1][columna]);
+    public static Fraccion[][] convertirMatriz(int[][] matrizOriginalEntera){
+        Fraccion[][] matriz = new Fraccion[matrizOriginalEntera.length/2][matrizOriginalEntera[0].length];
+        for(int fila=0, filaOriginal=0; fila<matrizOriginalEntera.length/2 && filaOriginal<matrizOriginalEntera.length; fila++, filaOriginal+=2){
+            for(int columna =0; columna<matrizOriginalEntera[0].length; columna++){
+                matriz[fila][columna] = new Fraccion(matrizOriginalEntera[filaOriginal][columna], matrizOriginalEntera[filaOriginal+1][columna]);
             }
         }
         return matriz;
     }
-    
-    public static Fraccion[][] convertirMatriz(float[][] matrizOriginal){
-        Fraccion[][] matriz = new Fraccion[matrizOriginal.length/2][matrizOriginal[0].length];
-        for(int fila=0, filaOriginal=0; fila<matrizOriginal.length/2 && filaOriginal<matrizOriginal.length; fila++, filaOriginal+=2){
-            for(int columna =0; columna<matrizOriginal[0].length; columna++){
-                matriz[fila][columna] = new Fraccion((int)matrizOriginal[filaOriginal][columna], (int)matrizOriginal[filaOriginal+1][columna]);
+    public static float[][] convertirMatriz(Fraccion[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
+        float[][] aux = new float[matriz.length][matriz[0].length];
+        for(int i=0; i<matriz.length; i++){
+            for(int j=0; j<matriz[0].length; j++){
+                aux[i][j] = convertir(matriz[i][j]);
             }
         }
-        return matriz;
+        return aux;
+    }
+    
+    public static Fraccion[][] convertirMatriz(float[][] matriz) { //convierte una matriz de flotantes a matriz de Fracciones
+        Fraccion[][] aux = new Fraccion[matriz.length][matriz[0].length];
+        for(int i=0; i<matriz.length; i++){
+            for(int j=0; j<matriz[0].length; j++){
+                aux[i][j] = convertir(matriz[i][j]);
+            }
+        }
+        return aux;
     }
     
     public static float[][] leerArchivo(){

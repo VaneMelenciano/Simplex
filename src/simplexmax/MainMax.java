@@ -43,7 +43,7 @@ public class MainMax {
         Matriz.matriz = Matriz.leerArchivo();
         //Matriz.imprimirMatriz(Matriz.matriz);
         System.out.println();
-        Matriz.matrizF = Fraccion.convertirMatriz(Matriz.matriz);
+        Matriz.matrizF = Matriz.convertirMatriz(Matriz.matriz);
         //Matriz.imprimirMatriz(Matriz.matrizF);
             ///DECIMALES
         //SimplexMax sm1 = new SimplexMax(2, 3, Matriz.matriz);
@@ -55,7 +55,14 @@ public class MainMax {
         System.out.println();
         sm3.imprimirSolucion();*/
             //FRACCIONES
-        SimplexMax sm3 = new SimplexMax(6,6, Matriz.matriz);
+        //int variables = 4, restricciones = 3; //Prueba 3
+        //int variables = 3, restricciones = 3; //Prueba 4
+        //int variables = 3, restricciones = 2; //Prueba 5
+        //int variables = 2, restricciones = 3; //Prueba 6
+        //int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
+        //int variables = 4, restricciones = 4; //Prueba 8
+        int variables = 6, restricciones = 6; //Prueba 10
+        SimplexMax sm3 = new SimplexMax(variables, restricciones, Matriz.matrizF);
         //System.out.println("IMPRIME RES");
         //System.out.println(Matriz.imprimirMatriz(sm3.getMatrizFraccion(), 2, 3));
         System.out.println();
