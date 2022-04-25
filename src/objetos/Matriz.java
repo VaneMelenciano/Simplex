@@ -61,6 +61,15 @@ public class Matriz {
         }
         return aux;
     }
+    public static Fraccion[][] convertirMatrizRecibiendoDenominadorNumerador(float[][] matrizOriginal) { //convierte una matriz de flotantes a matriz de Fracciones
+        Fraccion[][] matriz = new Fraccion[matrizOriginal.length/2][matrizOriginal[0].length];
+        for(int fila=0, filaOriginal=0; fila<matrizOriginal.length/2 && filaOriginal<matrizOriginal.length; fila++, filaOriginal+=2){
+            for(int columna =0; columna<matrizOriginal[0].length; columna++){
+                matriz[fila][columna] = new Fraccion((int)matrizOriginal[filaOriginal][columna], (int)matrizOriginal[filaOriginal+1][columna]);
+            }
+        }
+        return matriz;
+    }
     
     public static float[][] leerArchivo(){
         String aux, texto;

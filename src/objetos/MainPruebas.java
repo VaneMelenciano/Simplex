@@ -21,7 +21,7 @@ public class MainPruebas {
         //Falta sustituir los valores de las solucion optima en 
         //función objetivo y restricciones
         Matriz.matriz = Matriz.leerArchivo();
-        Matriz.imprimirMatriz(Matriz.convertirMatriz(Matriz.matriz));
+        Matriz.imprimirMatriz(Matriz.convertirMatrizRecibiendoDenominadorNumerador(Matriz.matriz));
         
     }
 }
