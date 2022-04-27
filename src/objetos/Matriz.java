@@ -241,7 +241,7 @@ public class Matriz {
             matriz += "x" + i + "\t";
         }
         for(i=1; i<=res; i++){
-            matriz += "S" + i + "\t";
+            matriz += "s" + i + "\t";
         }
         matriz += "| Constantes\n";
         //MATRIZ PRINCIPAL
@@ -282,7 +282,7 @@ public class Matriz {
             matriz += "x" + i + "\t";
         }
         for(i=1; i<=res; i++){
-            matriz += "S" + i + "\t";
+            matriz += "s" + i + "\t";
         }
         for(i=1; i<=res; i++){
             matriz += "A" + i + "\t";
@@ -328,7 +328,7 @@ public class Matriz {
                 columnaAux++;
         }
         for(i=1; i<=res; i++){
-            matrizCompleta += "S" + i + "\t";
+            matrizCompleta += "s" + i + "\t";
                 if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
                     matrizCompleta += "\t";
                     auxExiteEcuacionLarga[columnaAux] = true;

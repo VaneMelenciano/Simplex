@@ -67,11 +67,11 @@ public class MainMin {
         Ecuacion e9 = new Ecuacion(new Fraccion(0,1), new Fraccion(0,1));
         Ecuacion[] e = new Ecuacion[]{e1, e2, e3, e4, e5, e6, e7, e8, e9};*/
         
-        int variables = 4, restricciones = 3; //Prueba 3 NO SALE
+        //int variables = 4, restricciones = 3; //Prueba 3 NO SALE
         //int variables = 3, restricciones = 3; //Prueba 4
-        //int variables = 3, restricciones = 2; //Prueba 5
-        //int variables = 2, restricciones = 3; //Prueba 6
-        //int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
+        //int variables = 3, restricciones = 2; //Prueba 5, 1.3, 1.4
+        //int variables = 2, restricciones = 3; //Prueba 6 y 1.1, 1.5
+        int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
         //int variables = 4, restricciones = 4; //Prueba 8
         //int variables = 6, restricciones = 6; //Prueba 10 NO SALE
         
@@ -82,8 +82,9 @@ public class MainMin {
         
         
         SimplexMin sm = new SimplexMin(variables, restricciones, nueva);
+        //SimplexMin sm = new SimplexMin(variables, restricciones, Matriz.matriz);
         //System.out.println("\n ULTIMA");
-        System.out.println(Matriz.imprimirMatrizMinimizacion(sm.getMatrizFraccion(), variables, restricciones));
+        //System.out.println(Matriz.imprimirMatrizMinimizacion(sm.getMatrizFraccion(), variables, restricciones));
         //Ecuacion.toString(sm.getUltimaFila());
         //System.out.println("\n SOLUCION");
         System.out.println(sm.getSolucion());
