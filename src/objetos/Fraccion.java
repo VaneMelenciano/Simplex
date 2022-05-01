@@ -119,9 +119,10 @@ public class Fraccion {
         return auxF;
     }
     public static float convertir(Fraccion f){ //pasa un fraccion a decimal
-        float aux = f.numerador / f.denominador;
+        float aux = (float)((float)f.numerador / f.denominador);
 
-        return Float.valueOf(String.format("%3.3f", aux));
+        return aux;
+        //return Float.valueOf(String.format("%3.3f", aux));
     }
     public boolean compararMayor(Fraccion f) { //comparar si la fraccion actual es mayor que la recibida
         /*if(this.numerador<0 && f.numerador<0) return ((numerador*f.getDenominador())<(f.getNumerador()*this.denominador));

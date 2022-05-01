@@ -1,22 +1,23 @@
 Prueba7 -> 14.5 ejemplos maestra
 Minimizar 36x + 40y + 28z sujeto a
 6x + 5y + 2z >= 5
-2x + 5y + 4z >= 3
+2x + 5y + 4z >= 3 
 Solución óptima: z = 34; x = 1/2, y = 2/5, z = 0
 
-Prueba8 -> 14.6 ejemplos maestra
+*Prueba8 -> 14.6 ejemplos maestra
 Minimizar z = 20x + 30y + 16z sujeto a
 2.5x + 3y + 1z >= 3
 1x + 3y + 2z >= 4
-Solución óptima: z = 36; x = 0, y = 2/3, z = 1
+Solución óptima: z = 36; x = 0, y = 2/3, z = 1 (CHECAR)
 Solución óptima: z = 36; x = 0, y = 0.666667, z = 1
 
-Prueba9 -> 14.7 ejemplos maestra
+*Prueba9 -> 14.7 ejemplos maestra
 Minimizar z = 4x + 2y  sujeto a
 4x + 1y >= 20
 2x + 1y >= 14
 1x + 6y >= 18
 Solución óptima: z = 28; x = 6, y = 2
+Solución óptima:  Z: 28, x1: 6, x2: 2, s1: 6, s2: 0, s3: 0, A1: 0, A2: 0, A3: 0
 
 Prueba10 -> 14.4 ejemplos maestra
 Minimizar z = 60x + 80y  sujeto a

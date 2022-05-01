@@ -5,6 +5,7 @@
 package vistas;
 
 import java.awt.Color;
+import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -16,14 +17,24 @@ import javax.swing.JTextArea;
 public class Resultados extends JFrame{
     private JPanel panel;
     private JTextArea area;
-
-    public Resultados(){
-        setSize(1000,700);
+    private Font fuente;
+    private int agregar = 0;
+    public Resultados(int variables, int tipoSimplex){ //0-> min, 1-> max 
+        int ancho = 1200;
+        if(variables>=4 && tipoSimplex==0){
+            agregar=150;
+            ancho+=agregar;
+        }
+        setSize(ancho,710);
         setTitle("RESULTADOS");
         setLocationRelativeTo(null);
         setResizable(false);
+        fuente=new Font("Monospaced", Font.PLAIN, 13);
         initializeComponents();
+        
+        
     }
+    
 
     private void initializeComponents(){
         panel = new JPanel();
@@ -31,8 +42,9 @@ public class Resultados extends JFrame{
         panel.setBackground(Color.GRAY);
         //Creacion y especificaciones para el area de texto donde se mostraran las tablas del proceso de solución
         area = new JTextArea();
-        area.setBounds(15,15,960,660);
+        area.setBounds(15,15,1160+agregar,660);
         area.setEditable(false);
+        area.setFont(this.fuente);
         panel.add(area);
         this.getContentPane().add(panel);
         this.setVisible(true);

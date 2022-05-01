@@ -100,6 +100,7 @@ public class SimplexMin {
             filaPivoteDecimal();
             columnaPivoteivoteDecimal();
             solucion += Matriz.imprimirMatrizMinimizacion(this.matrizDecimal, this.variables, this.restricciones);
+            
         }
         buscarSolucionDecimal();
     }
@@ -359,18 +360,32 @@ public class SimplexMin {
         resultadoDecimal = this.matrizDecimal[this.matrizDecimal.length-1][this.matrizDecimal[0].length-1];
         resultadoVariablesDecimal = new float[this.variables+(this.restricciones*2)];
         boolean solucionFilaYaAsignado[] = new boolean[this.matrizDecimal.length-1];
+        int auxFilaResultado = -1;
         int columna = 0; //columna
+        boolean banderaResultadoBien = false;
         while(columna<this.matrizDecimal[0].length-1){
+            System.out.println("\n");
             boolean encontrado = false; //para saber si ya se encontró en valor de la variables, es decir, si existe un uno en la columna de esa variable
             for(int fila=0; fila<this.matrizDecimal.length-2; fila++){ //fila
-                if(this.matrizDecimal[fila][columna]==1 && this.matrizDecimal[fila][columna]==1 &&encontrado==false && solucionFilaYaAsignado[fila]==false){
-                    solucionFilaYaAsignado[fila] = true;
+                char n = String.format("%3.3f", this.matrizDecimal[fila][columna]).charAt(0);
+                System.out.println(this.matrizDecimal[fila][columna] + " " + n + " " + (n=='1'));
+                System.out.println(encontrado + " " + solucionFilaYaAsignado[fila] + " " + fila);
+                
+                if((n=='1') &&encontrado==false && solucionFilaYaAsignado[fila]==false){
+                    System.out.println("entro");
+                    //solucionFilaYaAsignado[fila] = true;
+                    auxFilaResultado=fila;
+                    System.out.println(fila + "<-fila");
+                    banderaResultadoBien = true;
                     resultadoVariablesDecimal[columna]=this.matrizDecimal[fila][this.matrizDecimal[fila].length-1];
                 }else if(encontrado == true || this.matrizDecimal[fila][columna]!=0){ //ya existe un 1 0 existen numeros dif a 1
+                    //if(encontrado == true) solucionFilaYaAsignado[auxUltimafila] = false;
                     resultadoVariablesDecimal[columna] = 0;
+                    banderaResultadoBien = false;
                     break;
                 }
             }
+            if(banderaResultadoBien) solucionFilaYaAsignado[auxFilaResultado] = true;
             columna++;
         }
         imprimirSolucionDecimal();
@@ -425,5 +440,10 @@ public class SimplexMin {
     }
     public String getSolucionOptima(){
         return this.solucionOptima;
+    }
+
+    private boolean esUno(float f) {
+        if(f>-0.001D && f<0.0001D) return true;
+        return false;
     }
 }

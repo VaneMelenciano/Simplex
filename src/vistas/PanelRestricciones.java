@@ -61,10 +61,10 @@ public class PanelRestricciones extends JPanel{
     private void agregarDesigualdades(int v, int r,boolean b){
         if(b==true){//Cuando es maximización <=
             for(int i=0;i<r;i++)
-                getaLabel().get(i).get(v-1).setText("x"+v+"<=");
+                getaLabel().get(i).get(v-1).setText("x"+v+" ≤");
         }else{//Cuando es minimización >=
             for(int i=0;i<r;i++)
-                getaLabel().get(i).get(v-1).setText("x"+v+">=");
+                getaLabel().get(i).get(v-1).setText("x"+v+" ≥");
         }
     }
 
