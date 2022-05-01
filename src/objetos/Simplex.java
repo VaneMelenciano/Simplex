@@ -50,7 +50,10 @@ public class Simplex {
             solucion = sm.getSolucion();
             solucionOptima = sm.getSolucionOptima();
         }else{//minimizacion con decimal
-            
+            float[][] matriz = Matriz.convertirMatriz(matrizFraccion);
+            SimplexMin sm = new SimplexMin(variables, restricciones, matriz);
+            solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }
         return solucion;
     }
@@ -71,7 +74,9 @@ public class Simplex {
             solucion = sm.getSolucion();
             solucionOptima = sm.getSolucionOptima();
         }else{//minimizacion con decimal
-            
+            SimplexMin sm = new SimplexMin(variables, restricciones, matrizDecimal);
+            solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }
         return solucion;
     }
@@ -91,7 +96,9 @@ public class Simplex {
             solucion = sm.getSolucion();
             solucionOptima = sm.getSolucionOptima();
         }else{//minimizacion con decimal
-            
+            SimplexMin sm = new SimplexMin(variables, restricciones, Matriz.convertirMatriz(mF));
+            solucion = sm.getSolucion();
+            solucionOptima = sm.getSolucionOptima();
         }
         return solucion;
     }

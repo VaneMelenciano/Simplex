@@ -274,48 +274,77 @@ public class Matriz {
         }
         return matriz;
     }
+    
     public static String imprimirMatrizMinimizacion(float[][] mat, int var, int res) {
-        String matriz  = "";
+        String matrizCompleta  = "";
+        boolean auxExiteEcuacionLarga[] = new boolean[mat[0].length-1];
         //PRIMERA FILA
-        int i;
+        int i, columnaAux = 0;
         for(i=1; i<=var; i++){
-            matriz += "x" + i + "\t";
+            matrizCompleta += "x" + i + "\t";
+            //matrizCompleta += " " + mat[mat.length-1][columnaAux] +" "  +mat[mat.length-2][columnaAux] + " ";
+            if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                matrizCompleta += "\t";
+                auxExiteEcuacionLarga[columnaAux] = true;
+            }
+            columnaAux++;
         }
         for(i=1; i<=res; i++){
-            matriz += "s" + i + "\t";
+            matrizCompleta += "s" + i + "\t";
+            if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                matrizCompleta += "\t";
+                auxExiteEcuacionLarga[columnaAux] = true;
+            }
+            columnaAux++;
         }
         for(i=1; i<=res; i++){
-            matriz += "A" + i + "\t";
+            matrizCompleta += "A" + i + "\t";
+            if(comprobarEcuacionLarga(mat[mat.length-1][columnaAux], mat[mat.length-2][columnaAux])==true){
+                matrizCompleta += "\t";
+                auxExiteEcuacionLarga[columnaAux] = true;
+            }
+            columnaAux++;
         }
-        matriz += "| Constantes\n";
+        matrizCompleta += "| Constantes\n";
         //MATRIZ PRINCIPAL
         for(i=0; i<mat.length-2; i++){//recorre la matriz recibida
             for(int j=0; j<mat[0].length-1; j++){
+                
                 //Para definir numero de decimales: String.format(5.56733D, "%3.3f")
-                matriz += String.format("%3.3f", mat[i][j]) + "\t";
+                matrizCompleta += String.format("%3.3f", mat[i][j]) + "\t";
+                if(auxExiteEcuacionLarga[j]==true){ //si hay ecuacion larga en esa columna
+                    matrizCompleta += "\t";
+                }
             }
-            matriz += "| " + String.format("%3.3f", mat[i][mat[0].length-1]) + "\n";
+            matrizCompleta += "| " + String.format("%3.3f", mat[i][mat[0].length-1]) + "\n";
         }
             //última fila (de ecuación)
         for(int columna=0; columna < mat[0].length; columna++){
             boolean banderaHayM = false;
+            
             //Coeficiente
-            if(columna == mat[0].length-1) matriz += "| ";
+            if(columna == mat[0].length-1) matrizCompleta += "| ";
+            
             if(mat[mat.length-2][columna]!=0){
-                matriz += String.format("%3.3f", mat[mat.length-2][columna]) + "M";
+            //if(mat[mat.length-2][columna]<-0.001D && mat[mat.length-2][columna]>0.001D){
+                //matriz += mat[mat.length-2][columna] + "M";
+                  matrizCompleta += String.format("%3.3f", mat[mat.length-2][columna]) + "M";  
+                
                 banderaHayM = true;
             }
-                if(banderaHayM == true && mat[mat.length-1][columna]>0) matriz += "+";
-                if(mat[mat.length-1][columna]!=0 || banderaHayM == false)matriz+= mat[mat.length-1][columna]; 
-            matriz+= "\t";
+                if(banderaHayM == true && mat[mat.length-1][columna]>0) matrizCompleta += "+";
+                if(mat[mat.length-1][columna]!=0 || banderaHayM == false)matrizCompleta+= String.format("%3.3f", mat[mat.length-1][columna]); 
+            matrizCompleta+= "\t";
         }
-        matriz+="\n";
-        return matriz;
+        matrizCompleta+="\n";
+        // matrizCompleta+=Arrays.toString(auxExiteEcuacionLarga);
+        return matrizCompleta;
     } 
     
-    private static String matrizCompleta;
+    
+
     public static String imprimirMatrizMinimizacion(Fraccion[][] mat, int var, int res) {
-        matrizCompleta  = "";
+        String matrizCompleta  = "";
         boolean auxExiteEcuacionLarga[] = new boolean[mat[0].length-1];
         //PRIMERA FILA
         int i, columnaAux = 0;
@@ -361,6 +390,10 @@ public class Matriz {
         for(int columna=0; columna < mat[0].length; columna++){
             auxS = "";
             boolean banderaHayM = false;
+            //Agregar tabulador
+            if(columna>0 && auxExiteEcuacionLarga[columna-1]==true && agregarTabulador(mat[mat.length-1][columna-1], mat[mat.length-2][columna-1])==true){
+                auxS += "\t";
+            }
             //Coeficiente
             if(columna == mat[0].length-1){
                 auxS += "| ";
@@ -376,7 +409,9 @@ public class Matriz {
                 if(mat[mat.length-1][columna].getNumerador()!=0 || banderaHayM == false){
                     auxS+= mat[mat.length-1][columna].toString();
                 } 
-             matrizCompleta+= auxS;   
+             
+             matrizCompleta+= auxS; 
+             
             matrizCompleta+= "\t";
             //matrizCompleta+= "\n";
             
@@ -407,6 +442,30 @@ public class Matriz {
             if((independiente.toString().length())>=8) return true;
         }
         return false;
+    }
+    private static boolean comprobarEcuacionLarga(Float independiente, Float coeficiente) {
+        if(independiente!=0 && coeficiente!=0) return true;
+        if(independiente>=200 || independiente<=-30) return true;
+        if(coeficiente>=200 || coeficiente<=-30) return true;
+        return false;
+    }
+
+    private static boolean agregarTabulador(Fraccion independiente, Fraccion coeficiente) {
+        if(coeficiente.getNumerador()!=0 && independiente.getNumerador()!=0){
+            if(coeficiente.getNumerador()>0 && (coeficiente.toString().length() + independiente.toString().length())==6){
+                //matrizCompleta+= "  Entro ";
+                return true;
+            }
+        }return false;
+    }
+    
+    private static boolean agregarTabulador(float independiente, float coeficiente) {
+        if(coeficiente!=0 && independiente!=0){
+            if(coeficiente>0 && (Float.valueOf(coeficiente).toString().length() + Float.valueOf(independiente).toString().length()) ==7){
+                //matrizCompleta+= "  Entro ";
+                return true;
+            }
+        }return false;
     }
     
 }

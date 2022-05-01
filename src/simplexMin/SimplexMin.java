@@ -304,7 +304,8 @@ public class SimplexMin {
      }
      private boolean verificarMDecimal() {
          //if(this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]!=0) return false;
-         if(this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]>=0 && this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]<=0.001) return true;
+         if(this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]> -0.001D && this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]<0.001D) return true;
+         //if(this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]>=0 && this.matrizDecimal[this.matrizDecimal.length-2][this.matrizDecimal[0].length-1]<=0.001) return true;
          return false;
      }
      
@@ -379,24 +380,30 @@ public class SimplexMin {
         solucion += "\nSolución óptima:  ";
         solucion += "Z: " + this.resultadoDecimal + ", "; //Z
         solucionOptima += "Z: " + this.resultadoDecimal + ", "; //Z
+        String aux;
         //variables
         int i, j;
         for(i=0; i<this.variables; i++){
-            solucion += "x" + (i+1) + ": " + this.resultadoVariablesDecimal[i] + ", ";
-            solucionOptima += "x" + (i+1) + ": " + this.resultadoVariablesDecimal[i] + ", ";
+            aux = String.format("%3.3f", this.resultadoVariablesDecimal[i]);
+            solucion += "x" + (i+1) + ": " + aux + ", ";
+            solucionOptima += "x" + (i+1) + ": " + aux + ", ";
         }
         //variables flojas - restricciones
         for(i=0, j=this.variables; i<this.restricciones && j<(this.restricciones+this.variables); i++, j++){
-            solucion += "s" + (i+1) + ": " + this.resultadoVariablesDecimal[j] + ", ";
-            solucionOptima += "s" + (i+1) + ": " + this.resultadoVariablesDecimal[j] + ", ";
+            aux = String.format("%3.3f", this.resultadoVariablesDecimal[j]);
+            solucion += "s" + (i+1) + ": " + aux + ", ";
+            solucionOptima += "s" + (i+1) + ": " + aux + ", ";
             
         }
         //variables artificiales
         for(i=0, j=this.restricciones+this.variables; i<this.restricciones-1 && j<(this.matrizDecimal[0].length-1); i++, j++){
-            solucion += "A" + (i+1) + ": " + this.resultadoVariablesDecimal[j] + ", ";
-            solucionOptima += "A" + (i+1) + ": " + this.resultadoVariablesDecimal[j] + ", ";
-        }solucion += "A" + this.restricciones + ": " + this.resultadoVariablesDecimal[this.resultadoVariablesDecimal.length-1] + "\n";
-        solucionOptima += "A" + this.restricciones + ": " + this.resultadoVariablesDecimal[this.resultadoVariablesDecimal.length-1] + "\n";
+            aux = String.format("%3.3f", this.resultadoVariablesDecimal[j]);
+            solucion += "A" + (i+1) + ": " + aux + ", ";
+            solucionOptima += "A" + (i+1) + ": " + aux + ", ";
+        }
+        aux = String.format("%3.3f", this.resultadoVariablesDecimal[this.resultadoVariablesDecimal.length-1]);
+        solucion += "A" + this.restricciones + ": " + aux + "\n";
+        solucionOptima += "A" + this.restricciones + ": " + aux + "\n";
     }
     
     public void imprimirSolucionF(){

@@ -59,9 +59,9 @@ public class MainMax {
         //int variables = 3, restricciones = 3; //Prueba 4
         //int variables = 3, restricciones = 2; //Prueba 5
         //int variables = 2, restricciones = 3; //Prueba 6
-        //int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
+        int variables = 2, restricciones = 2; //Prueba 7 y 9 y 11 y 12
         //int variables = 4, restricciones = 4; //Prueba 8
-        int variables = 6, restricciones = 6; //Prueba 10
+        //int variables = 6, restricciones = 6; //Prueba 10
         SimplexMax sm3 = new SimplexMax(variables, restricciones, Matriz.matrizF);
         //System.out.println("IMPRIME RES");
         //System.out.println(Matriz.imprimirMatriz(sm3.getMatrizFraccion(), 2, 3));
