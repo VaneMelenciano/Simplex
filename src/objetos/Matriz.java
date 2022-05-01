@@ -337,7 +337,7 @@ public class Matriz {
             matrizCompleta+= "\t";
         }
         matrizCompleta+="\n";
-        // matrizCompleta+=Arrays.toString(auxExiteEcuacionLarga);
+         //matrizCompleta+=Arrays.toString(auxExiteEcuacionLarga);
         return matrizCompleta;
     } 
     
@@ -445,8 +445,8 @@ public class Matriz {
     }
     private static boolean comprobarEcuacionLarga(Float independiente, Float coeficiente) {
         if(independiente!=0 && coeficiente!=0) return true;
-        if(independiente>=200 || independiente<=-30) return true;
-        if(coeficiente>=200 || coeficiente<=-30) return true;
+        /*if(independiente>=200 || independiente<=-30) return true;
+        if(coeficiente>=200 || coeficiente<=-30) return true;*/
         return false;
     }
 

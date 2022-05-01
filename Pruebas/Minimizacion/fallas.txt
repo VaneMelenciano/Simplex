@@ -1,10 +1,10 @@
-1 - decimal fraccion
-2 - decimal fraccion
-3 - decimal fraccion
-4 - decimal fraccion
-5 - decimal fraccion
-6 - decimal fraccion
-7 - decimal fraccion
-8 - decimal fraccion
+1 - decimal
+2 - decimal
+3 - decimal *
+4 - decimal
+5 - decimal
+6 - decimal
+7 - decimal
+8 - decimal
 9 - decimal fraccion
 10 - decimal fraccion
