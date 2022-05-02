@@ -20,28 +20,28 @@ public class Fraccion {
     public Fraccion(){
     }
     public int mcd(){
-       int num=getNumerador(), den=getDenominador(); // le asignamos a las variables el valor del numerador y denominador
-       if(num==0){              // veirificamos si es igual a 0
-         return 1;                       // si es igual a 0 retornara valor 1
-       }else{                           // sino se realizara el siguiente proceso
-         if(num<0){                      // verificamos que la variable num sea negativa  
-             num = num * -1;            // si es negativa la convertimos a positivo  
+       int num=getNumerador(), den=getDenominador(); 
+       if(num==0){              
+         return 1;                       
+       }else{                           
+         if(num<0){                     
+             num = num * -1;            
          } 
          if(den<0){ 
-           den = den * -1;            // realizamos el mismo proceso con la variable den  
+           den = den * -1;           
          }
-         if(den>num){                  // verificamos si la variable den es mayor a num 
-             int aux=num;           // si es mayor hacemos un intercambio de valores
-             num=den;               // debido a que la variable den no debe ser mayor a num
+         if(den>num){                  
+             int aux=num;           
+             num=den;               
              den=aux;
          } 
-         int mcd=1;               // incializamos la variable mcd en 1
-         while(den!=0){          // verificamos si la variable den es diferente de 0
-              mcd=den;       // asignamos a la variable mcd lo que contiene den
-              den = num % den;   // a la variable den le asignamos el residuo o modulo entre num y den
-              num = mcd;         // a la variable num le asignamos mcd
+         int mcd=1;              
+         while(den!=0){          
+              mcd=den;      
+              den = num % den;   
+              num = mcd;         
 
-         }                        // el ciclo se repetira hasta que se cumpla la condicion inicial    
+         }                          
          return mcd;
         }
     }

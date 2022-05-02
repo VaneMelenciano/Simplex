@@ -4,10 +4,12 @@
  */
 package vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 /**
@@ -45,12 +47,19 @@ public class Resultados extends JFrame{
         area.setBounds(15,15,1160+agregar,660);
         area.setEditable(false);
         area.setFont(this.fuente);
+        
+        //JScrollPane scroll = new JScrollPane(area);
         panel.add(area);
+            //panel.add(scroll, BorderLayout.CENTER);
         this.getContentPane().add(panel);
         this.setVisible(true);
     }
     
     public JTextArea getArea(){
         return area;
+    }
+    public void setTexto(String texto){
+        this.area.setText(texto);
+        //this.areaConsola.setCaretPosition(this.areaConsola.getDocument().getLength());
     }
 }

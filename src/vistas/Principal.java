@@ -324,19 +324,19 @@ public class Principal extends JFrame implements ActionListener{
             matriz = Matriz.convertirMatrizRecibiendoDenominadorNumerador(m.getMatriz());
             Resultados r = new Resultados(this.numeroVariables,0);
             if(radioBoton3Fraccion.isSelected()){ //Modo fracción
-                r.getArea().setText(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Fraccion, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), matriz));     
+                r.setTexto(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Fraccion, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), matriz));     
                 cajaS.setText(Simplex.getSolucionOptima());
             }else{ //Modo decimal
-                r.getArea().setText(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Decimal, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), matriz)); 
+                r.setTexto(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Decimal, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), matriz)); 
                 cajaS.setText(Simplex.getSolucionOptima());
             }
         }else{ // Utilizando Matriz tipo float
             Resultados r = new Resultados(this.numeroVariables,0);
             if(radioBoton3Fraccion.isSelected()){ //Modo fracción
-                r.getArea().setText(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Fraccion, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), m.getMatriz()));     
+                r.setTexto(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Fraccion, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), m.getMatriz()));     
                 cajaS.setText(Simplex.getSolucionOptima());
             }else{ //Modo decimal
-                r.getArea().setText(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Decimal, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), m.getMatriz())); 
+                r.setTexto(Simplex.simplex(TipoSimplex.Minimizacion, TipoNumero.Decimal, Integer.parseInt(comboVar.getSelectedItem().toString()), Integer.parseInt(comboRes.getSelectedItem().toString()), m.getMatriz())); 
                 cajaS.setText(Simplex.getSolucionOptima());
             }
         }
@@ -413,17 +413,16 @@ public class Principal extends JFrame implements ActionListener{
     private void ejemploCuatroMinimizacion() {
         radioBoton2Min.setSelected(true);
         radioBoton3Fraccion.setSelected(true);
-        comboVar.setSelectedIndex(2); this.numeroVariables=4;
-        comboRes.setSelectedIndex(2); this.numeroRestricciones=4;
+        comboVar.setSelectedIndex(1); this.numeroVariables=3;
+        comboRes.setSelectedIndex(0); this.numeroRestricciones=2;
         int variables = 0;
-        panelVar.getbField().get(variables++).setText("20000");
-        panelVar.getbField().get(variables++).setText("20000");
-        panelVar.getbField().get(variables++).setText("20000");
-        panelVar.getbField().get(variables++).setText("20000");
-        String restricciones[][] = { {"2", "1", "1", "2", "24"},
-                                     {"2", "2", "1", "0", "20"},
-                                    {"0", "0", "2", "2", "20"},
-                                    {"0", "0", "0", "4", "16"}};
+        panelVar.getbField().get(variables++).setText("2");
+        panelVar.getbField().get(variables++).setText("2");
+        panelVar.getbField().get(variables++).setText("2");
+        String restricciones[][] = { {"2", "1", "1", "24"},
+                                     {"2", "2", "1", "20"}};
+                                    //{"0", "0", "2", "20"}};
+                                    //{"0", "0", "0", "4", "16"}};
         for(int i=0;i<this.panelRes.getaField().size();i++){
             for(int j=0;j<this.numeroVariables+1;j++){
                 this.panelRes.getaField().get(i).get(j).setText(restricciones[i][j]);
